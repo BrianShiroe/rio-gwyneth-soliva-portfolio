@@ -26,7 +26,6 @@ export default function PortfolioGrid() {
       <div className="absolute bottom-10 left-10 w-96 h-96 bg-zinc-100/40 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 relative z-10">
-        
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 md:mb-20">
           <div>
@@ -41,7 +40,8 @@ export default function PortfolioGrid() {
 
           {/* Section Description */}
           <p className="text-zinc-500 text-sm md:text-base font-light max-w-md leading-relaxed">
-            Explore a curation of high-fidelity user interface concepts, clean responsive layouts, and elegant corporate graphic identities.
+            Explore a curation of high-fidelity user interface concepts, clean responsive layouts, and elegant corporate
+            graphic identities.
           </p>
         </div>
 
@@ -86,10 +86,7 @@ export default function PortfolioGrid() {
         </div>
 
         {/* Portfolio Cards Grid */}
-        <motion.div
-          layout
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"
-        >
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           <AnimatePresence mode="popLayout">
             {filteredItems.map((item) => (
               <motion.div
@@ -127,14 +124,10 @@ export default function PortfolioGrid() {
                     <span className="font-mono text-[9px] uppercase tracking-widest text-rose-gold font-bold">
                       {item.categoryLabel}
                     </span>
-                    <span className="text-[10px] text-zinc-400 font-mono font-medium uppercase">
-                      {item.client}
-                    </span>
+                    <span className="text-[10px] text-zinc-400 font-mono font-medium uppercase">{item.client}</span>
                   </div>
 
-                  <h3 className="text-xl font-serif font-bold text-brand-charcoal leading-snug mb-3">
-                    {item.title}
-                  </h3>
+                  <h3 className="text-xl font-serif font-bold text-brand-charcoal leading-snug mb-3">{item.title}</h3>
 
                   <p className="text-xs md:text-sm text-zinc-500 font-light leading-relaxed mb-6 line-clamp-2">
                     {item.description}
@@ -180,7 +173,8 @@ export default function PortfolioGrid() {
             Explore Rio's Full Creative Showcase
           </h3>
           <p className="text-zinc-500 text-xs md:text-sm font-light max-w-lg mb-6 leading-relaxed">
-            Access her official premium online digital portfolio directly to inspect interactive prototypes, social videography campaigns, and corporate branding reels.
+            Access her official premium online digital portfolio directly to inspect interactive prototypes, social
+            videography campaigns, and corporate branding reels.
           </p>
           <a
             href="https://riogwynethsoliva.my.canva.site/portfolio-2026"
@@ -192,7 +186,6 @@ export default function PortfolioGrid() {
             <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
         </div>
-
       </div>
 
       {/* Project Specifications Lightbox / Modal */}
@@ -229,7 +222,6 @@ export default function PortfolioGrid() {
                   <X className="w-4 h-4" />
                 </button>
               </div>
-
               {/* Scrollable details wrapper */}
               <div className="p-6 md:p-8 overflow-y-auto space-y-6">
                 <div>
@@ -266,34 +258,21 @@ export default function PortfolioGrid() {
                 {/* Tech specifications used */}
                 <div>
                   <p className="font-mono text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-3">
-                    Technologies / Ecosystem Applied
+                    Technologies & Medium
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {selectedProject.tech.map((t) => (
                       <span
                         key={t}
-                        className="font-mono text-[10px] text-zinc-600 bg-zinc-50 border border-zinc-100 px-2.5 py-1 rounded-md"
+                        className="font-mono text-[10px] text-zinc-500 bg-zinc-50 border border-zinc-100 px-2.5 py-1 rounded-md"
                       >
                         {t}
                       </span>
                     ))}
                   </div>
                 </div>
-
-                {/* Outer action portal link */}
-                <div className="pt-4 border-t border-zinc-100 flex items-center justify-between">
-                  <span className="font-mono text-[9px] text-zinc-400">PROJECT PORTAL 2026</span>
-                  <a
-                    href={selectedProject.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 bg-brand-charcoal hover:bg-rose-gold text-white font-semibold text-xs uppercase tracking-widest py-3 px-5 rounded-xl transition-colors cursor-pointer"
-                  >
-                    <span>Launch Project Canvas</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </div>
+              </div>{" "}
+              {/* Close scrollable details wrapper */}
             </motion.div>
           </>
         )}
