@@ -34,6 +34,10 @@ export default function Navbar({ activeSection, onContactClick }: NavbarProps) {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
+
+    // Update the browser's URL address bar with the hash
+    window.history.pushState(null, "", `#${id}`);
+
     const element = document.getElementById(id);
     if (element) {
       const offset = 80; // height of the navbar
@@ -187,9 +191,7 @@ export default function Navbar({ activeSection, onContactClick }: NavbarProps) {
                   <span>Get In Touch</span>
                   <ArrowUpRight className="w-4 h-4" />
                 </button>
-                <p className="text-center font-mono text-[9px] text-zinc-400">
-                  Dubai, UAE • +971544318032
-                </p>
+                <p className="text-center font-mono text-[9px] text-zinc-400">Dubai, UAE • +971544318032</p>
               </div>
             </motion.div>
           </>
