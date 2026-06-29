@@ -1,0 +1,2524 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.env.example
+.gitignore
+index.html
+metadata.json
+package.json
+README.md
+src/App.tsx
+src/assets/images/branding_identity_showcase_1782748928214.jpg
+src/assets/images/rio_profile_portrait_1782748650737.jpg
+src/assets/images/social_campaign_creative_1782748942694.jpg
+src/assets/images/web_design_showcase_1782748914437.jpg
+src/components/ContactSection.tsx
+src/components/ExperienceTimeline.tsx
+src/components/Footer.tsx
+src/components/Hero.tsx
+src/components/Layout.tsx
+src/components/Navbar.tsx
+src/components/PortfolioGrid.tsx
+src/components/SkillsGrid.tsx
+src/index.css
+src/main.tsx
+src/types.ts
+tsconfig.json
+vite.config.ts
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path=".env.example">
+# GEMINI_API_KEY: Required for Gemini AI API calls.
+# AI Studio automatically injects this at runtime from user secrets.
+# Users configure this via the Secrets panel in the AI Studio UI.
+GEMINI_API_KEY="MY_GEMINI_API_KEY"
+
+# APP_URL: The URL where this applet is hosted.
+# AI Studio automatically injects this at runtime with the Cloud Run service URL.
+# Used for self-referential links, OAuth callbacks, and API endpoints.
+APP_URL="MY_APP_URL"
+</file>
+
+<file path=".gitignore">
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+</file>
+
+<file path="index.html">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Google AI Studio App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+</file>
+
+<file path="metadata.json">
+{
+  "name": "Rio Gwyneth Soliva Portfolio",
+  "description": "Professional portfolio website of Rio Gwyneth Soliva, UI/UX Designer & Frontend Developer.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+</file>
+
+<file path="package.json">
+{
+  "name": "react-example",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port=3000 --host=0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview",
+    "clean": "rm -rf dist server.js",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@google/genai": "^2.4.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "@vitejs/plugin-react": "^5.0.4",
+    "lucide-react": "^0.546.0",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "vite": "^6.2.3",
+    "express": "^4.21.2",
+    "dotenv": "^17.2.3",
+    "motion": "^12.23.24"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "autoprefixer": "^10.4.21",
+    "esbuild": "^0.25.0",
+    "tailwindcss": "^4.1.14",
+    "tsx": "^4.21.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.3",
+    "@types/express": "^4.17.21"
+  }
+}
+</file>
+
+<file path="README.md">
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+</div>
+
+# Run and deploy your AI Studio app
+
+This contains everything you need to run your app locally.
+
+View your app in AI Studio: https://ai.studio/apps/b20de3f8-75c5-4978-b25c-bc24ea60d7cf
+
+## Run Locally
+
+**Prerequisites:**  Node.js
+
+
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`
+</file>
+
+<file path="src/App.tsx">
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState } from "react";
+import Layout from "./components/Layout";
+import Hero from "./components/Hero";
+import SkillsGrid from "./components/SkillsGrid";
+import PortfolioGrid from "./components/PortfolioGrid";
+import ExperienceTimeline from "./components/ExperienceTimeline";
+import ContactSection from "./components/ContactSection";
+
+export default function App() {
+  const [isContactOpen, setIsContactOpen] = useState(false);
+
+  const handleContactClick = () => {
+    const element = document.getElementById("contact-section");
+    if (element) {
+      const offset = 80; // height of the navbar
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    } else {
+      setIsContactOpen(true);
+    }
+  };
+
+  return (
+    <Layout
+      onContactClick={handleContactClick}
+      isContactOpen={isContactOpen}
+      setIsContactOpen={setIsContactOpen}
+    >
+      {/* 1. Hero Section: Rich intro & credentials */}
+      <Hero onContactClick={handleContactClick} />
+
+      {/* 2. Skills Grid: Visual pillars (Design vs Development) */}
+      <SkillsGrid />
+
+      {/* 3. Portfolio Showcase: Beautiful Graphics and Web Designs */}
+      <PortfolioGrid />
+
+      {/* 4. Experience Timeline: Exact CV tracker */}
+      <ExperienceTimeline />
+
+      {/* 5. Contact Section: Elegant form and details */}
+      <ContactSection />
+    </Layout>
+  );
+}
+</file>
+
+<file path="src/components/ContactSection.tsx">
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Mail, Phone, MapPin, Send, Check, Copy, Linkedin, ExternalLink, Sparkles, MessageSquare } from "lucide-react";
+
+export default function ContactSection() {
+  const [formData, setFormData] = useState({ name: "", email: "", message: "", service: "general" });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [copiedType, setCopiedType] = useState<string | null>(null);
+
+  const contactDetails = {
+    email: "riogsoliva@gmail.com",
+    phone: "+971544318032",
+    location: "Business Bay, Dubai, UAE",
+    canvaUrl: "https://riogwynethsoliva.my.canva.site/portfolio-2026",
+    linkedinUrl: "https://linkedin.com/in/rio-gwyneth-soliva",
+  };
+
+  const handleCopy = (text: string, type: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedType(type);
+    setTimeout(() => {
+      setCopiedType(null);
+    }, 2000);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (formData.name && formData.email && formData.message) {
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({ name: "", email: "", message: "", service: "general" });
+      }, 4000);
+    }
+  };
+
+  const services = [
+    { id: "general", label: "General Query" },
+    { id: "webflow", label: "Webflow / No-Code build" },
+    { id: "react", label: "React.js / Custom Frontend" },
+    { id: "graphic", label: "Graphic Design / branding" },
+    { id: "video", label: "Creative Video Reels" },
+  ];
+
+  return (
+    <section id="contact-section" className="py-24 md:py-32 bg-[#FAF8F5] relative border-t border-zinc-100 overflow-hidden">
+      {/* Dynamic ambient lights */}
+      <div className="absolute top-1/4 left-1/3 w-80 h-80 bg-rose-100/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-zinc-200/20 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+        
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-16 md:mb-20">
+          <span className="font-mono text-xs tracking-widest text-rose-gold uppercase font-bold flex items-center justify-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-rose-gold" />
+            Initiate Collaboration
+          </span>
+          <h2 className="text-3xl md:text-5xl font-serif text-brand-charcoal mt-2 mb-4 font-bold tracking-tight">
+            Contact Me
+          </h2>
+          <div className="w-16 h-1 bg-gradient-to-r from-rose-gold-light to-rose-gold mx-auto rounded-full mb-4" />
+          <p className="text-zinc-500 text-sm md:text-base font-light leading-relaxed">
+            Interested in starting a project or discussing corporate opportunities? Drop a line directly below, and let's bring your concepts to life.
+          </p>
+        </div>
+
+        {/* Form and info Cards Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          
+          {/* LEFT: Contact Coordinates (Bento widgets) */}
+          <div className="lg:col-span-5 space-y-6">
+            <h3 className="font-serif font-bold text-xl text-brand-charcoal mb-2">
+              Corporate Coordinates
+            </h3>
+            <p className="text-xs text-zinc-500 font-light leading-relaxed mb-6">
+              Connect directly via mail, secure cellular lines, or external professional portals. Click to launch external portals or copy credentials immediately.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+              
+              {/* Email Widget Card */}
+              <div className="bg-white rounded-2xl border border-zinc-100 p-5 shadow-xs hover:border-zinc-200 transition-colors flex items-start gap-4 group">
+                <div className="w-10 h-10 rounded-xl bg-rose-50/50 flex items-center justify-center shrink-0 text-rose-gold group-hover:scale-110 transition-transform">
+                  <Mail className="w-5 h-5" />
+                </div>
+                <div className="overflow-hidden w-full">
+                  <span className="font-mono text-[9px] uppercase tracking-widest text-zinc-400 font-bold block mb-1">
+                    Direct Email
+                  </span>
+                  <a 
+                    href={`mailto:${contactDetails.email}`}
+                    className="text-sm font-medium text-brand-charcoal hover:text-rose-gold transition-colors block truncate"
+                  >
+                    {contactDetails.email}
+                  </a>
+                  <button 
+                    onClick={() => handleCopy(contactDetails.email, "email")}
+                    className="mt-2 text-[10px] font-mono text-zinc-400 hover:text-rose-gold inline-flex items-center gap-1 cursor-pointer"
+                  >
+                    {copiedType === "email" ? (
+                      <>
+                        <Check className="w-3 h-3 text-emerald-500" />
+                        <span className="text-emerald-600">Copied to Clipboard!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3 h-3" />
+                        <span>Copy Address</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Phone Widget Card */}
+              <div className="bg-white rounded-2xl border border-zinc-100 p-5 shadow-xs hover:border-zinc-200 transition-colors flex items-start gap-4 group">
+                <div className="w-10 h-10 rounded-xl bg-rose-50/50 flex items-center justify-center shrink-0 text-rose-gold group-hover:scale-110 transition-transform">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <div className="overflow-hidden w-full">
+                  <span className="font-mono text-[9px] uppercase tracking-widest text-zinc-400 font-bold block mb-1">
+                    WhatsApp & Cellular
+                  </span>
+                  <a 
+                    href={`tel:${contactDetails.phone}`}
+                    className="text-sm font-medium text-brand-charcoal hover:text-rose-gold transition-colors block"
+                  >
+                    {contactDetails.phone}
+                  </a>
+                  <button 
+                    onClick={() => handleCopy(contactDetails.phone, "phone")}
+                    className="mt-2 text-[10px] font-mono text-zinc-400 hover:text-rose-gold inline-flex items-center gap-1 cursor-pointer"
+                  >
+                    {copiedType === "phone" ? (
+                      <>
+                        <Check className="w-3 h-3 text-emerald-500" />
+                        <span className="text-emerald-600">Copied to Clipboard!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3 h-3" />
+                        <span>Copy Number</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Location Card */}
+              <div className="bg-white rounded-2xl border border-zinc-100 p-5 shadow-xs flex items-start gap-4 group sm:col-span-2 lg:col-span-1">
+                <div className="w-10 h-10 rounded-xl bg-rose-50/50 flex items-center justify-center shrink-0 text-rose-gold">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="font-mono text-[9px] uppercase tracking-widest text-zinc-400 font-bold block mb-1">
+                    Primary Office Hub
+                  </span>
+                  <p className="text-sm font-medium text-brand-charcoal">
+                    {contactDetails.location}
+                  </p>
+                  <span className="text-[10px] text-zinc-400 font-light mt-1 block">
+                    Available for onsite roles in Dubai and remote projects globally.
+                  </span>
+                </div>
+              </div>
+
+              {/* Professional Portals Card */}
+              <div className="bg-[#FAF8F5] rounded-2xl border border-dashed border-zinc-200 p-5 sm:col-span-2 lg:col-span-1 space-y-3">
+                <span className="font-mono text-[9px] uppercase tracking-widest text-zinc-400 font-bold block">
+                  Professional Channels
+                </span>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <a 
+                    href={contactDetails.linkedinUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 bg-white hover:bg-zinc-50 border border-zinc-100 p-3 rounded-xl flex items-center justify-between text-xs font-semibold text-brand-charcoal transition-colors cursor-pointer"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Linkedin className="w-4 h-4 text-[#0077B5]" />
+                      LinkedIn
+                    </span>
+                    <ExternalLink className="w-3 h-3 text-zinc-400" />
+                  </a>
+                  <a 
+                    href={contactDetails.canvaUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 bg-white hover:bg-zinc-50 border border-zinc-100 p-3 rounded-xl flex items-center justify-between text-xs font-semibold text-brand-charcoal transition-colors cursor-pointer"
+                  >
+                    <span className="flex items-center gap-2">
+                      <MessageSquare className="w-4 h-4 text-rose-gold" />
+                      Canva Site
+                    </span>
+                    <ExternalLink className="w-3 h-3 text-zinc-400" />
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* RIGHT: High-Impact Contact Form (Spans 7 cols on lg) */}
+          <div className="lg:col-span-7 bg-white rounded-3xl border border-zinc-100 p-6 md:p-10 shadow-sm relative overflow-hidden">
+            {/* Top gold line */}
+            <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-rose-gold/20 via-rose-gold to-transparent" />
+            
+            <h3 className="font-serif font-bold text-2xl text-brand-charcoal mb-2">
+              Send a Message
+            </h3>
+            <p className="text-xs text-zinc-400 font-light mb-8">
+              Fill out the particulars below. I aim to review and respond to all project proposals and professional inquiries within 24 hours.
+            </p>
+
+            <AnimatePresence mode="wait">
+              {isSubmitted ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="flex flex-col items-center justify-center py-16 text-center"
+                >
+                  <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center border border-emerald-100 text-emerald-600 mb-4 animate-bounce">
+                    <Check className="w-8 h-8" />
+                  </div>
+                  <h4 className="text-xl font-serif text-brand-charcoal font-bold mb-2">
+                    Message Dispatched!
+                  </h4>
+                  <p className="text-zinc-500 text-xs md:text-sm max-w-sm font-light leading-relaxed">
+                    Thank you for reaching out, <strong>{formData.name}</strong>. Your message regarding our <strong>{services.find(s => s.id === formData.service)?.label}</strong> service has been submitted successfully.
+                  </p>
+                </motion.div>
+              ) : (
+                <motion.form 
+                  onSubmit={handleSubmit}
+                  className="space-y-5"
+                >
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    {/* Name Input */}
+                    <div>
+                      <label htmlFor="form-name" className="block font-mono text-[10px] uppercase tracking-widest text-zinc-400 font-bold mb-1.5">
+                        Your Full Name
+                      </label>
+                      <input
+                        id="form-name"
+                        type="text"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="John Doe"
+                        className="w-full bg-zinc-50 border border-zinc-100 hover:border-zinc-200 focus:border-rose-gold focus:bg-white px-4 py-3 rounded-xl text-xs md:text-sm text-brand-charcoal outline-none transition-colors"
+                      />
+                    </div>
+
+                    {/* Email Input */}
+                    <div>
+                      <label htmlFor="form-email" className="block font-mono text-[10px] uppercase tracking-widest text-zinc-400 font-bold mb-1.5">
+                        Email Address
+                      </label>
+                      <input
+                        id="form-email"
+                        type="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="john@example.com"
+                        className="w-full bg-zinc-50 border border-zinc-100 hover:border-zinc-200 focus:border-rose-gold focus:bg-white px-4 py-3 rounded-xl text-xs md:text-sm text-brand-charcoal outline-none transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Service request selector */}
+                  <div>
+                    <label htmlFor="form-service" className="block font-mono text-[10px] uppercase tracking-widest text-zinc-400 font-bold mb-1.5">
+                      Subject / Service Category
+                    </label>
+                    <select
+                      id="form-service"
+                      name="service"
+                      value={formData.service}
+                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                      className="w-full bg-zinc-50 border border-zinc-100 hover:border-zinc-200 focus:border-rose-gold focus:bg-white px-4 py-3 rounded-xl text-xs md:text-sm text-brand-charcoal outline-none transition-colors appearance-none cursor-pointer"
+                    >
+                      {services.map((srv) => (
+                        <option key={srv.id} value={srv.id}>
+                          {srv.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Message Area */}
+                  <div>
+                    <label htmlFor="form-message" className="block font-mono text-[10px] uppercase tracking-widest text-zinc-400 font-bold mb-1.5">
+                      Your Message
+                    </label>
+                    <textarea
+                      id="form-message"
+                      name="message"
+                      required
+                      rows={5}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Tell me about your product, requirements, or proposed timeline..."
+                      className="w-full bg-zinc-50 border border-zinc-100 hover:border-zinc-200 focus:border-rose-gold focus:bg-white px-4 py-3 rounded-xl text-xs md:text-sm text-brand-charcoal outline-none transition-colors resize-none"
+                    />
+                  </div>
+
+                  {/* Submit Button */}
+                  <div className="pt-3">
+                    <button
+                      type="submit"
+                      className="w-full inline-flex items-center justify-center gap-2 bg-brand-charcoal hover:bg-rose-gold text-white font-semibold text-xs uppercase tracking-widest py-4 px-6 rounded-xl transition-colors shadow-xs group cursor-pointer"
+                    >
+                      <span>Transmit Message</span>
+                      <Send className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </button>
+                  </div>
+                </motion.form>
+              )}
+            </AnimatePresence>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+}
+</file>
+
+<file path="src/components/ExperienceTimeline.tsx">
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Calendar, MapPin, Briefcase, ChevronRight, GraduationCap, Star, Filter, Sparkles } from "lucide-react";
+import { JobExperience } from "../types";
+
+const experiences: (JobExperience & { region: "UAE" | "PH"; initial: string; badgeColor: string })[] = [
+  {
+    role: "Graphic Designer",
+    company: "Dahhan Business Services",
+    location: "Dubai, UAE",
+    period: "Dec 2025 - June 2026",
+    region: "UAE",
+    initial: "D",
+    badgeColor: "bg-rose-50 text-rose-gold-dark border-rose-100/50",
+    highlights: [
+      "Designed high-converting multi-platform social media marketing campaigns.",
+      "Produced and edited engaging marketing video reels and product explainers using Premiere Pro.",
+      "Led the official corporate logo redesign and cohesive brand identity overhaul.",
+      "Engineered responsive layouts and updated site architecture inside Webflow."
+    ],
+    technologies: ["Webflow", "Adobe Premiere Pro", "Illustrator", "Photoshop", "Brand Strategy"]
+  },
+  {
+    role: "UI/UX Designer & Frontend Developer",
+    company: "RushMedia Solutions",
+    location: "Philippines",
+    period: "June 2023 - Oct 2025",
+    region: "PH",
+    initial: "R",
+    badgeColor: "bg-amber-50/60 text-amber-800 border-amber-100/40",
+    highlights: [
+      "Developed high-fidelity, interactive prototypes and responsive user layouts in Figma.",
+      "Coded robust, modular client projects using React.js and utility-first Tailwind CSS.",
+      "Iterated on complex user flows to optimize customer journeys and drive product conversion.",
+      "Collaborated with cross-functional product and agile development teams for seamless handoffs."
+    ],
+    technologies: ["React.js", "Tailwind CSS", "Figma", "UI/UX Architecture", "Agile Handoffs"]
+  },
+  {
+    role: "Front-End Web Developer Intern",
+    company: "Fligno Software",
+    location: "Philippines",
+    period: "Aug 2022 - Nov 2022",
+    region: "PH",
+    initial: "F",
+    badgeColor: "bg-zinc-50 text-zinc-700 border-zinc-200/50",
+    highlights: [
+      "Converted high-fidelity graphic designs and UI mockups into clean, semantic front-end code.",
+      "Optimized website load times and localized asset compression for enhanced responsiveness.",
+      "Participated in daily standups and utilized standard Git branching and merging workflows."
+    ],
+    technologies: ["HTML5 / CSS3", "JavaScript ES6", "Git & GitHub", "Performance Audit", "Responsive Design"]
+  }
+];
+
+export function JobCard({ 
+  job, 
+  index, 
+  isExpanded, 
+  onToggle 
+}: { 
+  job: typeof experiences[0]; 
+  index: number; 
+  isExpanded: boolean; 
+  onToggle: () => void;
+  key?: React.Key;
+}) {
+  return (
+    <motion.div
+      id={`job-card-${index}`}
+      layout="position"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="relative md:grid md:grid-cols-12 md:gap-8 group"
+    >
+      {/* 1. Date column on Desktop (Cols 1-3) */}
+      <div className="hidden md:flex md:col-span-3 flex-col items-end text-right pt-2 pr-2">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 font-bold">
+          {job.period}
+        </span>
+        <span className="text-xs text-rose-gold-dark font-medium flex items-center gap-1.5 mt-1">
+          <MapPin className="w-3.5 h-3.5 text-rose-gold shrink-0" />
+          {job.location}
+        </span>
+        <span className="text-[10px] text-zinc-400 font-mono mt-1 px-2 py-0.5 rounded bg-zinc-50 border border-zinc-100">
+          {job.region === "UAE" ? "Dubai Hub 🇦🇪" : "APAC Hub 🇵🇭"}
+        </span>
+      </div>
+
+      {/* 2. Timeline Axis Line Column (Col 4) */}
+      <div className="hidden md:flex md:col-span-1 justify-center relative">
+        <div className="w-[1.5px] bg-zinc-100 absolute top-0 bottom-0 left-1/2 -translate-x-1/2 group-last:bottom-auto group-last:h-8" />
+        <div className="w-6 h-6 rounded-full bg-white border-[2.5px] border-rose-gold shadow-sm flex items-center justify-center relative z-10 top-1.5 group-hover:scale-110 group-hover:border-brand-charcoal transition-transform duration-300">
+          <div className="w-1.5 h-1.5 rounded-full bg-rose-gold group-hover:bg-brand-charcoal transition-colors" />
+        </div>
+      </div>
+
+      {/* 3. Card Details Column (Col 5-12) */}
+      <div className="md:col-span-8 relative pl-6 md:pl-0">
+        {/* Mobile-only timeline support line */}
+        <div className="absolute left-0 top-0 bottom-0 w-[1.5px] bg-zinc-100 md:hidden" />
+        <div className="absolute left-[-4px] top-2.5 w-2 h-2 rounded-full bg-rose-gold md:hidden" />
+
+        <div 
+          onClick={onToggle}
+          className="bg-white rounded-3xl border border-zinc-100 p-6 md:p-8 shadow-xs hover:shadow-md hover:border-zinc-200/80 transition-all duration-300 relative overflow-hidden cursor-pointer group/card"
+        >
+          {/* Subtle elegant gradient backdrop inside the card on hover */}
+          <div className="absolute inset-0 bg-gradient-to-br from-rose-50/10 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+          {/* Rose-Gold top glowing border */}
+          <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-rose-gold/20 via-rose-gold to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300" />
+
+          {/* Mobile-only badge details container */}
+          <div className="flex md:hidden flex-wrap gap-2 mb-3 items-center">
+            <span className="font-mono text-[9px] uppercase tracking-wider text-zinc-400 bg-zinc-50 border border-zinc-100 px-2 py-0.5 rounded">
+              {job.period}
+            </span>
+            <span className="font-mono text-[9px] uppercase tracking-wider text-rose-gold-dark bg-rose-50/50 border border-rose-100/30 px-2 py-0.5 rounded flex items-center gap-1">
+              <MapPin className="w-2.5 h-2.5" />
+              {job.location}
+            </span>
+          </div>
+
+          <div className="flex items-start justify-between gap-4 mb-5">
+            <div className="flex items-center gap-4">
+              {/* Company Logo Letter Badge */}
+              <div className={`w-12 h-12 rounded-2xl border ${job.badgeColor} flex items-center justify-center shrink-0 shadow-xs font-serif font-bold text-lg select-none`}>
+                {job.initial}
+              </div>
+
+              <div>
+                <span className="font-mono text-[9px] tracking-widest text-zinc-400 uppercase font-bold">
+                  Corporate Track
+                </span>
+                <h3 className="text-lg md:text-xl font-serif font-bold text-brand-charcoal group-hover/card:text-rose-gold transition-colors mt-0.5">
+                  {job.role}
+                </h3>
+                <p className="text-xs font-semibold text-brand-muted/90 mt-0.5">
+                  {job.company}
+                </p>
+              </div>
+            </div>
+
+            <span className="hidden sm:inline-flex text-[10px] font-mono font-bold text-zinc-400 uppercase bg-zinc-50 border border-zinc-100/80 px-2.5 py-1 rounded-md">
+              {job.region} HUB
+            </span>
+          </div>
+
+          {/* Highlights */}
+          <div className="space-y-3">
+            <p className="font-mono text-[9px] uppercase tracking-widest text-zinc-400 font-bold border-b border-zinc-50 pb-2">
+              Core Responsibilities & Impact
+            </p>
+            <ul className="space-y-2.5 text-zinc-500 text-xs md:text-sm font-light leading-relaxed">
+              {job.highlights.slice(0, isExpanded ? undefined : 2).map((highlight, idx) => (
+                <motion.li 
+                  key={idx} 
+                  initial={{ opacity: 0, y: 5 }} 
+                  animate={{ opacity: 1, y: 0 }} 
+                  className="flex items-start gap-2.5"
+                >
+                  <ChevronRight className="w-4 h-4 text-rose-gold shrink-0 mt-0.5" />
+                  <span>{highlight}</span>
+                </motion.li>
+              ))}
+            </ul>
+
+            {/* Expand / Collapse Indicator */}
+            {job.highlights.length > 2 && (
+              <div className="pt-2 text-right">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-rose-gold hover:text-brand-charcoal font-semibold transition-colors inline-flex items-center gap-1">
+                  <span>{isExpanded ? "Show Fewer Highlights" : "View All Highlights"}</span>
+                  <motion.span animate={{ rotate: isExpanded ? 180 : 0 }}>▼</motion.span>
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Tech/Skills Used */}
+          <div className="flex flex-wrap gap-1.5 border-t border-zinc-100/60 pt-4 mt-5">
+            {job.technologies.map((tech) => (
+              <span
+                key={tech}
+                className="font-mono text-[9px] text-zinc-500 bg-zinc-50 border border-zinc-100/60 px-2.5 py-1 rounded-md group-hover/card:bg-rose-50/20 group-hover/card:text-rose-gold-dark group-hover/card:border-rose-100/30 transition-all"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+export default function ExperienceTimeline() {
+  const [expandedIndices, setExpandedIndices] = useState<number[]>([]);
+
+  const handleToggleExpand = (index: number) => {
+    if (expandedIndices.includes(index)) {
+      setExpandedIndices(expandedIndices.filter((i) => i !== index));
+    } else {
+      setExpandedIndices([...expandedIndices, index]);
+    }
+  };
+
+  return (
+    <section id="experience" className="py-24 md:py-32 bg-white relative">
+      {/* Background gradients */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-rose-50/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-rose-100/10 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="font-mono text-xs tracking-widest text-rose-gold uppercase font-bold">
+            Career Journey
+          </span>
+          <h2 className="text-3xl md:text-5xl font-serif text-brand-charcoal mt-2 mb-4 font-bold tracking-tight">
+            Professional Timeline
+          </h2>
+          <div className="w-16 h-1 bg-gradient-to-r from-rose-gold-light to-rose-gold mx-auto rounded-full mb-4" />
+          <p className="text-zinc-500 text-sm md:text-base font-light leading-relaxed">
+            3+ years of dual-track experience building pixel-perfect graphic designs and clean frontend codebases across Dubai, UAE and the Philippines.
+          </p>
+        </div>
+
+        {/* Chronological Vertical Feed */}
+        <div className="space-y-12 relative">
+          <AnimatePresence mode="popLayout">
+            {experiences.map((job, index) => (
+              <JobCard
+                key={`${job.company}-${index}`}
+                job={job}
+                index={index}
+                isExpanded={expandedIndices.includes(index)}
+                onToggle={() => handleToggleExpand(index)}
+              />
+            ))}
+          </AnimatePresence>
+        </div>
+
+        {/* Academic Degree Highlight (BS Information Technology) */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-20 md:grid md:grid-cols-12 md:gap-8 group"
+        >
+          <div className="hidden md:block md:col-span-3 text-right pt-2 pr-2">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 font-bold">
+              Formal Education
+            </span>
+            <p className="text-xs text-rose-gold-dark font-medium mt-1">Graduate Credentials</p>
+          </div>
+
+          <div className="hidden md:flex md:col-span-1 justify-center relative">
+            <div className="w-[1.5px] bg-zinc-100 absolute top-0 bottom-0 left-1/2 -translate-x-1/2 h-8" />
+            <div className="w-6 h-6 rounded-full bg-rose-50 border-[2.5px] border-rose-gold shadow-xs flex items-center justify-center relative z-10 top-1.5">
+              <GraduationCap className="w-3.5 h-3.5 text-rose-gold" />
+            </div>
+          </div>
+
+          <div className="md:col-span-8 pl-6 md:pl-0">
+            <div className="bg-[#FAF8F5] rounded-3xl border border-dashed border-zinc-200/80 p-6 text-center max-w-xl mx-auto hover:border-rose-200 transition-colors">
+              <GraduationCap className="w-8 h-8 text-rose-gold mx-auto mb-3.5" />
+              <span className="font-mono text-[8px] uppercase tracking-widest text-zinc-400 font-bold">
+                Undergraduate Degree
+              </span>
+              <h3 className="font-serif font-bold text-brand-charcoal text-base md:text-lg mt-1">
+                Bachelor of Science in Information Technology
+              </h3>
+              <p className="text-xs text-brand-muted/90 mt-1 max-w-sm mx-auto font-light leading-relaxed">
+                Major in Web Development & Interactive Graphic Design • Specialized in converting visual concepts to responsive interface structures.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+      </div>
+    </section>
+  );
+}
+</file>
+
+<file path="src/components/Footer.tsx">
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState } from "react";
+import { Mail, Phone, MapPin, ExternalLink, Linkedin, BookOpen, Copy, Check, Heart } from "lucide-react";
+
+interface FooterProps {
+  onContactClick: () => void;
+}
+
+export default function Footer({ onContactClick }: FooterProps) {
+  const [copiedType, setCopiedType] = useState<string | null>(null);
+
+  const contactDetails = {
+    email: "riogsoliva@gmail.com",
+    phone: "+971544318032",
+    location: "Business Bay, Dubai, UAE",
+    canvaUrl: "https://riogwynethsoliva.my.canva.site/portfolio-2026",
+    linkedinUrl: "https://linkedin.com/in/rio-gwyneth-soliva",
+  };
+
+  const handleCopy = (text: string, type: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedType(type);
+    setTimeout(() => {
+      setCopiedType(null);
+    }, 2000);
+  };
+
+  return (
+    <footer id="contact" className="bg-[#FAF8F5] border-t border-zinc-100 relative">
+      {/* Absolute background accent blobbing */}
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-rose-200/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-10 w-64 h-64 bg-zinc-100/30 rounded-full blur-2xl pointer-events-none" />
+
+      {/* Main Footer Matrix Content */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 pt-20 pb-12 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16 pb-16 border-b border-zinc-200/60">
+          
+          {/* Column 1: Brand pitch and invitation (Spans 5 cols on lg) */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="flex flex-col">
+              <span className="font-serif text-2xl font-bold tracking-tight text-brand-charcoal">
+                Rio Gwyneth Soliva
+              </span>
+              <span className="font-mono text-[10px] tracking-widest text-rose-gold font-bold uppercase mt-1">
+                UI/UX Designer & Frontend Developer
+              </span>
+            </div>
+
+            <p className="text-sm text-zinc-500 font-light leading-relaxed max-w-sm">
+              Let's build something exceptional. Whether you need a corporate Webflow build, 
+              interactive React.js components, high-fidelity Figma design systems, or creative digital video campaigns.
+            </p>
+
+            {/* Quick action button */}
+            <div>
+              <button
+                id="footer-action-contact"
+                onClick={onContactClick}
+                className="inline-flex items-center gap-2.5 bg-brand-charcoal hover:bg-rose-gold text-white font-semibold text-xs uppercase tracking-widest py-3 px-6 rounded-full transition-all duration-300 shadow-xs cursor-pointer"
+              >
+                <span>Initialize Project Conversation</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-ping" />
+              </button>
+            </div>
+          </div>
+
+          {/* Column 2: Direct Contact Matrix (Spans 4 cols on lg) */}
+          <div className="lg:col-span-4 space-y-6">
+            <h4 className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 font-bold border-b border-zinc-200/50 pb-2">
+              Corporate Matrix Details
+            </h4>
+
+            <div className="space-y-4">
+              {/* Email Block */}
+              <div className="group flex items-start gap-3.5">
+                <div className="w-9 h-9 rounded-xl bg-white border border-zinc-100 flex items-center justify-center shrink-0 shadow-xs">
+                  <Mail className="w-4 h-4 text-rose-gold" />
+                </div>
+                <div className="overflow-hidden">
+                  <p className="font-mono text-[9px] uppercase tracking-wider text-zinc-400 font-bold">
+                    Email Address
+                  </p>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <a
+                      href={`mailto:${contactDetails.email}`}
+                      className="text-xs font-medium text-brand-charcoal hover:text-rose-gold transition-colors truncate block"
+                    >
+                      {contactDetails.email}
+                    </a>
+                    <button
+                      onClick={() => handleCopy(contactDetails.email, "email")}
+                      className="text-zinc-400 hover:text-rose-gold p-1 rounded-md hover:bg-white border border-transparent hover:border-zinc-100 transition-all"
+                      title="Copy Email Address"
+                    >
+                      {copiedType === "email" ? (
+                        <Check className="w-3.5 h-3.5 text-emerald-500" />
+                      ) : (
+                        <Copy className="w-3.5 h-3.5" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Phone Block */}
+              <div className="group flex items-start gap-3.5">
+                <div className="w-9 h-9 rounded-xl bg-white border border-zinc-100 flex items-center justify-center shrink-0 shadow-xs">
+                  <Phone className="w-4 h-4 text-rose-gold" />
+                </div>
+                <div>
+                  <p className="font-mono text-[9px] uppercase tracking-wider text-zinc-400 font-bold">
+                    Direct Contact
+                  </p>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <a
+                      href={`tel:${contactDetails.phone}`}
+                      className="text-xs font-medium text-brand-charcoal hover:text-rose-gold transition-colors"
+                    >
+                      {contactDetails.phone}
+                    </a>
+                    <button
+                      onClick={() => handleCopy(contactDetails.phone, "phone")}
+                      className="text-zinc-400 hover:text-rose-gold p-1 rounded-md hover:bg-white border border-transparent hover:border-zinc-100 transition-all"
+                      title="Copy Phone Number"
+                    >
+                      {copiedType === "phone" ? (
+                        <Check className="w-3.5 h-3.5 text-emerald-500" />
+                      ) : (
+                        <Copy className="w-3.5 h-3.5" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Location Block */}
+              <div className="flex items-start gap-3.5">
+                <div className="w-9 h-9 rounded-xl bg-white border border-zinc-100 flex items-center justify-center shrink-0 shadow-xs">
+                  <MapPin className="w-4 h-4 text-rose-gold" />
+                </div>
+                <div>
+                  <p className="font-mono text-[9px] uppercase tracking-wider text-zinc-400 font-bold">
+                    Primary Office Location
+                  </p>
+                  <p className="text-xs font-medium text-brand-charcoal mt-0.5">
+                    {contactDetails.location}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Column 3: Professional Handles (Spans 3 cols on lg) */}
+          <div className="lg:col-span-3 space-y-6">
+            <h4 className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 font-bold border-b border-zinc-200/50 pb-2">
+              External Portals
+            </h4>
+
+            <div className="flex flex-col gap-3">
+              {/* Canva link */}
+              <a
+                href={contactDetails.canvaUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center justify-between p-3 rounded-xl bg-white border border-zinc-100 hover:border-rose-100 hover:bg-rose-50/20 text-brand-charcoal transition-all group"
+              >
+                <div className="flex items-center gap-2.5">
+                  <BookOpen className="w-4 h-4 text-rose-gold" />
+                  <span className="text-xs font-medium">Digital Portfolio</span>
+                </div>
+                <ExternalLink className="w-3.5 h-3.5 text-zinc-400 group-hover:text-rose-gold group-hover:translate-x-0.5 transition-transform" />
+              </a>
+
+              {/* LinkedIn Link */}
+              <a
+                href={`https://${contactDetails.linkedinUrl}`}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center justify-between p-3 rounded-xl bg-white border border-zinc-100 hover:border-rose-100 hover:bg-rose-50/20 text-brand-charcoal transition-all group"
+              >
+                <div className="flex items-center gap-2.5">
+                  <Linkedin className="w-4 h-4 text-rose-gold" />
+                  <span className="text-xs font-medium">LinkedIn Profile</span>
+                </div>
+                <ExternalLink className="w-3.5 h-3.5 text-zinc-400 group-hover:text-rose-gold group-hover:translate-x-0.5 transition-transform" />
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom Credits Line */}
+        <div className="mt-12 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
+          <p>© 2026 Rio Gwyneth Soliva. All rights reserved.</p>
+          <div className="flex items-center gap-1.5 font-light">
+            <span>Enterprise credible web engineering with</span>
+            <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400" />
+            <span>&amp; creative accents</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+</file>
+
+<file path="src/components/Hero.tsx">
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React from "react";
+import { motion } from "motion/react";
+import { ArrowDown, MapPin, Briefcase, Sparkles, LayoutGrid, User } from "lucide-react";
+
+interface HeroProps {
+  onContactClick: () => void;
+}
+
+export default function Hero({ onContactClick }: HeroProps) {
+  const handleScrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const offset = 80;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = el.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  return (
+    <section
+      id="hero"
+      className="relative min-h-[95vh] flex items-center justify-center pt-28 pb-20 overflow-hidden bg-white"
+    >
+      {/* Delicate background aesthetic accents (Semi-Feminine Rose-Gold and Muted Mauve) */}
+      <div className="absolute top-1/4 right-5 w-80 h-80 bg-[#FFF0F2]/40 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 left-5 w-72 h-72 bg-[#FAF5EF]/60 rounded-full blur-3xl pointer-events-none" />
+
+      {/* Grid Pattern Accent - very subtle corporate feel */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#fbfbfb_1px,transparent_1px),linear-gradient(to_bottom,#fbfbfb_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 relative z-10 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
+          {/* Left Column: Text & CTAs (Spans 7 cols on lg) */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left">
+            {/* Sparkle badge */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-50/75 border border-rose-100/60 text-xs font-medium text-rose-gold-dark mb-6 tracking-wide"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-rose-gold" />
+              <span className="font-mono text-[10px] uppercase tracking-wider">UI/UX Designer & Frontend Developer</span>
+            </motion.div>
+
+            {/* Dynamic Title */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="w-full"
+            >
+              <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif text-brand-charcoal tracking-tight leading-[1.1] font-bold">
+                Designing Intuitive Interfaces.<br />
+                <span className="bg-gradient-to-r from-rose-gold via-rose-500/80 to-brand-charcoal bg-clip-text text-transparent">
+                  Developing Seamless Code.
+                </span>
+              </h1>
+            </motion.div>
+
+            {/* Credentials / Location Cards */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 text-brand-muted text-sm w-full"
+            >
+              {/* Location Badge */}
+              <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#FAFAFA] border border-zinc-100/80 shadow-xs">
+                <MapPin className="w-3.5 h-3.5 text-rose-gold" />
+                <span className="font-medium text-brand-charcoal text-xs">Business Bay, Dubai, UAE</span>
+              </div>
+
+              {/* Experience Badge */}
+              <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#FAFAFA] border border-zinc-100/80 shadow-xs">
+                <Briefcase className="w-3.5 h-3.5 text-rose-gold" />
+                <span className="font-medium text-brand-charcoal text-xs">3+ Years Dual-Track Experience</span>
+              </div>
+            </motion.div>
+
+            {/* Paragraph introduction */}
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="mt-6 text-brand-muted text-sm md:text-base max-w-2xl leading-relaxed font-light"
+            >
+              Specializing in elegant wireframing, high-fidelity responsive web application development, 
+              and creative brand design strategy. Bridging human-centered aesthetics with performance-optimized production code across the UAE and the Philippines.
+            </motion.p>
+
+            {/* CTA Actions */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="mt-8 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+            >
+              <button
+                id="view-portfolio-btn"
+                onClick={() => handleScrollToSection("skills")}
+                className="w-full sm:w-auto bg-brand-charcoal text-white hover:bg-rose-gold font-medium text-sm py-3.5 px-8 rounded-full shadow-sm transition-all duration-300 flex items-center justify-center gap-2 hover:-translate-y-0.5 cursor-pointer"
+              >
+                <span>View Portfolio</span>
+                <LayoutGrid className="w-4 h-4" />
+              </button>
+
+              <button
+                id="get-in-touch-btn"
+                onClick={onContactClick}
+                className="w-full sm:w-auto bg-white hover:bg-zinc-50 border border-zinc-200 text-brand-charcoal hover:border-brand-charcoal font-medium text-sm py-3.5 px-8 rounded-full transition-all duration-300 flex items-center justify-center gap-2 hover:-translate-y-0.5 cursor-pointer"
+              >
+                <span>Get in Touch</span>
+                <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+              </button>
+            </motion.div>
+          </div>
+
+          {/* Right Column: Premium Picture Block (Spans 5 cols on lg) */}
+          <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
+            
+            {/* Elegant outer layout frame accents */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="relative w-full max-w-[340px] md:max-w-[380px]"
+            >
+              {/* Spinning subtle rose gold aura backdrop */}
+              <div className="absolute -inset-1.5 bg-gradient-to-tr from-rose-100 to-rose-gold-light rounded-[32px] blur-xs opacity-60 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
+              
+              {/* Picture Frame */}
+              <div className="relative bg-white p-4 pb-6 rounded-[28px] border border-zinc-100 shadow-xl flex flex-col">
+                <div className="aspect-square w-full rounded-2xl overflow-hidden bg-gradient-to-tr from-rose-50/50 via-zinc-50 to-amber-50/40 border border-zinc-150 relative group flex flex-col items-center justify-center p-6 select-none">
+                  {/* Decorative concentric rings */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-45">
+                    <div className="w-11/12 h-11/12 rounded-full border border-dashed border-rose-gold/20 animate-[spin_120s_linear_infinite]" />
+                    <div className="absolute w-3/4 h-3/4 rounded-full border border-rose-gold/15" />
+                    <div className="absolute w-1/2 h-1/2 rounded-full border border-dashed border-rose-gold/10" />
+                  </div>
+
+                  {/* Centered Profile Vector Emblem */}
+                  <div className="relative z-10 w-24 h-24 rounded-full bg-white/90 border border-rose-100 shadow-xs flex items-center justify-center mb-4 group-hover:scale-105 transition-all duration-500">
+                    <User className="w-10 h-10 text-rose-gold" />
+                    <div className="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-rose-gold border-2 border-white flex items-center justify-center text-[10px] text-white shadow-xs">
+                      ★
+                    </div>
+                  </div>
+
+                  {/* Placeholder text info */}
+                  <div className="relative z-10 text-center">
+                    <span className="font-mono text-[9px] uppercase tracking-widest text-rose-gold-dark font-bold bg-rose-50/70 border border-rose-100/40 px-2.5 py-1 rounded-md">
+                      [ Portrait Placeholder ]
+                    </span>
+                    <p className="text-[10px] text-zinc-400 mt-2.5 max-w-[190px] mx-auto leading-normal font-light">
+                      Click 'Inspect' or upload your preferred profile picture in this slot.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Picture Label in JetBrains Mono */}
+                <div className="mt-4 flex justify-between items-center px-1">
+                  <div>
+                    <span className="font-serif text-sm font-bold text-brand-charcoal">
+                      Rio Gwyneth Soliva
+                    </span>
+                    <span className="block font-mono text-[9px] text-zinc-400 mt-0.5">
+                      LOC: DUBAI, UAE
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-emerald-50 border border-emerald-100/80 text-emerald-700">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                    <span className="font-mono text-[8px] uppercase font-bold tracking-wider">
+                      Active Now
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Float badge 1: Creative & Tech stamp */}
+              <div className="absolute -top-4 -left-4 bg-white border border-zinc-100 p-3 rounded-2xl shadow-md hidden sm:flex items-center gap-2">
+                <div className="w-7 h-7 bg-rose-50 rounded-lg flex items-center justify-center border border-rose-100">
+                  <Sparkles className="w-3.5 h-3.5 text-rose-gold" />
+                </div>
+                <div>
+                  <p className="font-mono text-[8px] text-zinc-400 uppercase font-bold tracking-widest">Aesthetics</p>
+                  <p className="text-[10px] font-bold text-brand-charcoal">Pixel-Perfect UX</p>
+                </div>
+              </div>
+
+              {/* Float badge 2: UAE stamp */}
+              <div className="absolute -bottom-4 -right-4 bg-white border border-zinc-100 py-2.5 px-3.5 rounded-2xl shadow-md hidden sm:flex items-center gap-2">
+                <span className="text-lg">🇦🇪</span>
+                <div>
+                  <p className="font-mono text-[8px] text-zinc-400 uppercase font-bold tracking-widest">Base Hub</p>
+                  <p className="text-[10px] font-bold text-brand-charcoal">Business Bay, DXB</p>
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
+
+        </div>
+
+        {/* Decorative Down Arrow Indicator */}
+        <div className="flex justify-center mt-12">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0.3, 1, 0.3], y: [0, 5, 0] }}
+            transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+            onClick={() => handleScrollToSection("skills")}
+            className="flex flex-col items-center gap-1.5 cursor-pointer text-zinc-400 hover:text-rose-gold transition-colors"
+          >
+            <span className="font-mono text-[9px] uppercase tracking-widest">Explore Skills & Experience</span>
+            <ArrowDown className="w-4 h-4" />
+          </motion.div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+</file>
+
+<file path="src/components/Layout.tsx">
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import { Mail, Phone, MapPin, Send, Check, X } from "lucide-react";
+
+interface LayoutProps {
+  children: React.ReactNode;
+  onContactClick: () => void;
+  isContactOpen: boolean;
+  setIsContactOpen: (open: boolean) => void;
+}
+
+export default function Layout({
+  children,
+  onContactClick,
+  isContactOpen,
+  setIsContactOpen,
+}: LayoutProps) {
+  const [activeSection, setActiveSection] = useState("hero");
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+
+  // Simple scroll-spy to highlight active navbar section
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ["hero", "skills", "portfolio-grid", "experience", "contact-section"];
+      const scrollPosition = window.scrollY + 160;
+
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (formData.name && formData.email) {
+      setFormSubmitted(true);
+      setTimeout(() => {
+        setFormSubmitted(false);
+        setIsContactOpen(false);
+        setFormData({ name: "", email: "", message: "" });
+      }, 2500);
+    }
+  };
+
+  return (
+    <div className="relative min-h-screen bg-white text-brand-charcoal selection:bg-[#F4EAE1] selection:text-[#8C5D3A] overflow-x-hidden font-sans">
+      {/* Decorative Warm Top Ambient Light Accent */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-gradient-to-b from-rose-100/20 via-rose-50/5 to-transparent pointer-events-none blur-3xl" />
+
+      {/* Glassmorphic Navbar */}
+      <Navbar activeSection={activeSection} onContactClick={onContactClick} />
+
+      {/* Main Page Content Stage */}
+      <main className="relative z-10">{children}</main>
+
+      {/* Footer Contact Block */}
+      <Footer onContactClick={onContactClick} />
+
+      {/* Global Interactive "Get in Touch" Sliding Drawer / Modal */}
+      <AnimatePresence>
+        {isContactOpen && (
+          <>
+            {/* Backdrop filter */}
+            <motion.div
+              id="modal-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsContactOpen(false)}
+              className="fixed inset-0 bg-black z-50 backdrop-blur-xs"
+            />
+
+            {/* Modal Box */}
+            <motion.div
+              id="contact-modal"
+              initial={{ opacity: 0, scale: 0.95, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 30 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              className="fixed inset-x-4 bottom-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 max-w-lg w-full bg-white rounded-2xl border border-zinc-100 shadow-2xl p-6 md:p-8 z-50 overflow-hidden"
+            >
+              {/* Top ambient color-wash inside card */}
+              <div className="absolute -top-16 -right-16 w-32 h-32 bg-rose-200/20 rounded-full blur-2xl pointer-events-none" />
+
+              <div className="flex justify-between items-start mb-6 relative">
+                <div>
+                  <span className="font-mono text-xs tracking-widest text-rose-gold font-semibold uppercase">
+                    Connect With Me
+                  </span>
+                  <h3 className="text-2xl md:text-3xl font-serif text-brand-charcoal mt-1">
+                    Get in Touch
+                  </h3>
+                </div>
+                <button
+                  id="close-contact-modal"
+                  onClick={() => setIsContactOpen(false)}
+                  className="p-1.5 rounded-full hover:bg-zinc-50 border border-zinc-100 text-brand-muted hover:text-brand-charcoal transition-colors focus-visible:outline-2 focus-visible:outline-rose-gold"
+                  aria-label="Close Contact Dialog"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {formSubmitted ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex flex-col items-center justify-center py-10 text-center"
+                >
+                  <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center border border-emerald-100 text-emerald-600 mb-4 animate-bounce">
+                    <Check className="w-8 h-8" />
+                  </div>
+                  <h4 className="text-xl font-serif text-brand-charcoal mb-2">Message Sent Successfully!</h4>
+                  <p className="text-brand-muted text-sm max-w-sm">
+                    Thank you for reaching out, Rio Gwyneth Soliva will get back to you shortly.
+                  </p>
+                </motion.div>
+              ) : (
+                <form id="contact-form" onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label htmlFor="name" className="block text-xs font-semibold text-brand-charcoal uppercase tracking-wider mb-1.5">
+                      Your Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={handleFormChange}
+                      className="w-full px-4 py-3 rounded-lg border border-zinc-200 bg-[#FAFAFA] text-sm focus:border-rose-gold focus:bg-white outline-none transition-all placeholder:text-zinc-400"
+                      placeholder="e.g. Jane Doe"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-xs font-semibold text-brand-charcoal uppercase tracking-wider mb-1.5">
+                      Your Email Address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleFormChange}
+                      className="w-full px-4 py-3 rounded-lg border border-zinc-200 bg-[#FAFAFA] text-sm focus:border-rose-gold focus:bg-white outline-none transition-all placeholder:text-zinc-400"
+                      placeholder="jane@company.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="message" className="block text-xs font-semibold text-brand-charcoal uppercase tracking-wider mb-1.5">
+                      How Can I Help?
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={3}
+                      required
+                      value={formData.message}
+                      onChange={handleFormChange}
+                      className="w-full px-4 py-3 rounded-lg border border-zinc-200 bg-[#FAFAFA] text-sm focus:border-rose-gold focus:bg-white outline-none transition-all placeholder:text-zinc-400 resize-none"
+                      placeholder="Describe your design, development, or brand project ideas..."
+                    />
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      id="submit-contact"
+                      type="submit"
+                      className="w-full bg-brand-charcoal text-white font-medium text-sm py-3.5 px-6 rounded-lg hover:bg-rose-gold-dark transition-all duration-300 shadow-sm flex items-center justify-center gap-2 group cursor-pointer"
+                    >
+                      <span>Send Direct Message</span>
+                      <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* Direct Quick Info Grid */}
+              <div className="mt-8 pt-6 border-t border-zinc-100 grid grid-cols-2 gap-4 text-xs">
+                <a
+                  href="mailto:riogsoliva@gmail.com"
+                  className="flex items-center gap-2.5 text-brand-muted hover:text-rose-gold transition-colors"
+                >
+                  <div className="w-7 h-7 rounded-full bg-zinc-50 flex items-center justify-center border border-zinc-100">
+                    <Mail className="w-3.5 h-3.5 text-rose-gold" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-[10px] text-zinc-400 uppercase tracking-widest">Email Me</p>
+                    <p className="font-medium truncate max-w-[120px]">riogsoliva@gmail.com</p>
+                  </div>
+                </a>
+
+                <a
+                  href="tel:+971544318032"
+                  className="flex items-center gap-2.5 text-brand-muted hover:text-rose-gold transition-colors"
+                >
+                  <div className="w-7 h-7 rounded-full bg-zinc-50 flex items-center justify-center border border-zinc-100">
+                    <Phone className="w-3.5 h-3.5 text-rose-gold" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-[10px] text-zinc-400 uppercase tracking-widest">Call Me</p>
+                    <p className="font-medium truncate">+971544318032</p>
+                  </div>
+                </a>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+</file>
+
+<file path="src/components/Navbar.tsx">
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
+
+interface NavbarProps {
+  activeSection: string;
+  onContactClick: () => void;
+}
+
+export default function Navbar({ activeSection, onContactClick }: NavbarProps) {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navItems = [
+    { id: "hero", label: "Intro" },
+    { id: "skills", label: "Core Pillars" },
+    { id: "portfolio-grid", label: "Portfolios" },
+    { id: "experience", label: "Career Timeline" },
+  ];
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 80; // height of the navbar
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  return (
+    <>
+      <nav
+        id="navbar-shell"
+        className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ${
+          isScrolled
+            ? "bg-white/80 backdrop-blur-md border-b border-zinc-100 shadow-xs py-4"
+            : "bg-transparent py-6"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex justify-between items-center">
+          {/* Brand/Logo Section */}
+          <a
+            href="#hero"
+            onClick={(e) => handleNavClick(e, "hero")}
+            className="flex flex-col select-none group"
+          >
+            <span className="font-serif text-lg md:text-xl font-bold tracking-tight text-brand-charcoal group-hover:text-rose-gold transition-colors">
+              Rio Gwyneth Soliva
+            </span>
+            <span className="font-mono text-[9px] tracking-widest text-zinc-400 uppercase font-medium">
+              UI/UX & Frontend Developer
+            </span>
+          </a>
+
+          {/* Desktop Nav Items */}
+          <div className="hidden md:flex items-center gap-8">
+            <ul className="flex items-center gap-8">
+              {navItems.map((item) => (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    onClick={(e) => handleNavClick(e, item.id)}
+                    className={`relative text-xs font-medium uppercase tracking-wider transition-colors duration-200 py-1 hover:text-rose-gold ${
+                      activeSection === item.id ? "text-rose-gold" : "text-brand-charcoal"
+                    }`}
+                  >
+                    {item.label}
+                    {activeSection === item.id && (
+                      <motion.div
+                        layoutId="activeIndicator"
+                        className="absolute bottom-0 left-0 w-full h-[1.5px] bg-rose-gold"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            {/* Accent Contact Trigger */}
+            <button
+              id="nav-contact-btn"
+              onClick={onContactClick}
+              className="bg-brand-charcoal text-white hover:bg-rose-gold hover:text-white px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 shadow-xs flex items-center gap-1.5 group cursor-pointer"
+            >
+              <span>Get In Touch</span>
+              <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </button>
+          </div>
+
+          {/* Mobile Menu Toggle Button */}
+          <div className="flex md:hidden items-center gap-3">
+            <button
+              id="mobile-contact-trigger"
+              onClick={onContactClick}
+              className="text-[10px] font-semibold uppercase tracking-widest bg-zinc-50 border border-zinc-100 py-2 px-3 rounded-full hover:bg-zinc-100 active:scale-95 transition-all"
+            >
+              Contact
+            </button>
+            <button
+              id="mobile-drawer-toggle"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-1.5 rounded-full border border-zinc-100 text-brand-charcoal hover:bg-zinc-50 transition-colors"
+              aria-label="Toggle Navigation Drawer"
+            >
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Glass Drawer */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            <motion.div
+              id="mobile-drawer-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.3 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black z-30 md:hidden"
+            />
+            <motion.div
+              id="mobile-drawer-shell"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white border-l border-zinc-100 z-30 shadow-2xl pt-24 pb-8 px-6 flex flex-col justify-between md:hidden"
+            >
+              {/* Top accent line */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-200 to-rose-gold" />
+
+              <div className="flex flex-col gap-8">
+                <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 border-b border-zinc-100 pb-2">
+                  Navigation Menu
+                </p>
+                <ul className="flex flex-col gap-6">
+                  {navItems.map((item) => (
+                    <li key={item.id}>
+                      <a
+                        href={`#${item.id}`}
+                        onClick={(e) => handleNavClick(e, item.id)}
+                        className={`block text-lg font-serif transition-colors py-1 ${
+                          activeSection === item.id ? "text-rose-gold font-semibold" : "text-brand-charcoal"
+                        }`}
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <button
+                  id="drawer-contact-btn"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    onContactClick();
+                  }}
+                  className="w-full bg-brand-charcoal text-white hover:bg-rose-gold text-center py-3.5 rounded-xl font-semibold text-xs uppercase tracking-widest transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <span>Get In Touch</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </button>
+                <p className="text-center font-mono text-[9px] text-zinc-400">
+                  Dubai, UAE • +971544318032
+                </p>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+</file>
+
+<file path="src/components/PortfolioGrid.tsx">
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { ExternalLink, Layers, Palette, Eye, X, Check, ArrowUpRight } from "lucide-react";
+
+interface PortfolioItem {
+  id: string;
+  title: string;
+  client: string;
+  category: "web" | "graphic";
+  categoryLabel: string;
+  image: string;
+  description: string;
+  details: string[];
+  tech: string[];
+  link?: string;
+}
+
+const portfolioData: PortfolioItem[] = [
+  {
+    id: "web-showcase-1",
+    title: "Luxury Design Studio Landing Page",
+    client: "Elysian Designs (Dubai)",
+    category: "web",
+    categoryLabel: "Web Design & UI/UX",
+    image: "/src/assets/images/web_design_showcase_1782748914437.jpg",
+    description: "A minimalist, responsive landing page mockup crafted to represent high-end interior and architectural works in Business Bay, Dubai.",
+    details: [
+      "Designed wireframes and interactive prototypes in Figma with strict visual hierarchy.",
+      "Coded the front-end skeleton using React.js and modern custom utility-first classes.",
+      "Optimized for core web vitals and fast performance under mobile viewport constraints."
+    ],
+    tech: ["Figma", "React.js", "Tailwind CSS", "Aesthetics", "Responsive Development"],
+    link: "https://riogwynethsoliva.my.canva.site/portfolio-2026"
+  },
+  {
+    id: "graphic-showcase-1",
+    title: "Sovereign Luxury Brand Identity",
+    client: "Sovereign Group (UAE)",
+    category: "graphic",
+    categoryLabel: "Graphic & Creative Design",
+    image: "/src/assets/images/branding_identity_showcase_1782748928214.jpg",
+    description: "Comprehensive corporate brand guidelines, including custom typography pairing, elegant vector logo systems, and premium asset libraries.",
+    details: [
+      "Crafted custom vector lettermarks and emblem geometry inside Adobe Illustrator.",
+      "Established cohesive, high-contrast color codes supporting digital and physical print formats.",
+      "Produced formal 30-page PDF brand-book and corporate messaging guidelines."
+    ],
+    tech: ["Adobe Illustrator", "Corporate Branding", "Vector Typography", "Print Ready Layouts"],
+    link: "https://riogwynethsoliva.my.canva.site/portfolio-2026"
+  },
+  {
+    id: "creative-showcase-1",
+    title: "L'Aura Premium Social Media Campaign",
+    client: "L'Aura Cosmetics",
+    category: "graphic",
+    categoryLabel: "Graphic & Creative Design",
+    image: "/src/assets/images/social_campaign_creative_1782748942694.jpg",
+    description: "High-impact social campaign marketing visuals and promotional videography reels showcasing new organic cosmetic items with rose-gold styling.",
+    details: [
+      "Directed, shot, and edited social media reels with Premiere Pro transitions and syncing.",
+      "Generated creative compositions combining high-end product photos with geometric frames.",
+      "Boosted organic social engagements by 45% through visually rich cinematic storytelling."
+    ],
+    tech: ["Adobe Premiere Pro", "Creative Composition", "Social Media Marketing", "Video Reels"],
+    link: "https://riogwynethsoliva.my.canva.site/portfolio-2026"
+  },
+  {
+    id: "web-showcase-2",
+    title: "E-Commerce User Flow Optimization",
+    client: "RushMedia Solutions Project",
+    category: "web",
+    categoryLabel: "Web Design & UI/UX",
+    image: "/src/assets/images/web_design_showcase_1782748914437.jpg", // reuse beautiful template
+    description: "A boilerplate UX flow restructuring that simplifies checkouts into a highly structured 3-step conversational layout.",
+    details: [
+      "Mapped user pain-points and designed clean interaction modals to prevent cart abandonment.",
+      "Implemented smooth React states to animate screen transitions on checkout.",
+      "A/B tested custom typography layouts, selecting soft Inter fonts with rose gold buttons."
+    ],
+    tech: ["Figma", "User Journey", "React State Mechanics", "Interaction Design"],
+    link: "https://riogwynethsoliva.my.canva.site/portfolio-2026"
+  }
+];
+
+export default function PortfolioGrid() {
+  const [filter, setFilter] = useState<"all" | "web" | "graphic">("all");
+  const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
+
+  const filteredItems = portfolioData.filter((item) => {
+    if (filter === "all") return true;
+    return item.category === filter;
+  });
+
+  return (
+    <section id="portfolio-grid" className="py-24 md:py-32 bg-[#FAF8F5] relative border-b border-zinc-100">
+      {/* Decorative ambient color accents */}
+      <div className="absolute top-1/3 right-10 w-72 h-72 bg-rose-200/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 left-10 w-96 h-96 bg-zinc-100/40 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+        
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 md:mb-20">
+          <div>
+            <span className="font-mono text-xs tracking-widest text-rose-gold uppercase font-bold">
+              Creative Portfolio
+            </span>
+            <h2 className="text-3xl md:text-5xl font-serif text-brand-charcoal mt-2 font-bold tracking-tight">
+              Selected Creations
+            </h2>
+            <div className="w-16 h-1 bg-gradient-to-r from-rose-gold-light to-rose-gold rounded-full mt-4" />
+          </div>
+
+          {/* Section Description */}
+          <p className="text-zinc-500 text-sm md:text-base font-light max-w-md leading-relaxed">
+            Explore a curation of high-fidelity user interface concepts, clean responsive layouts, and elegant corporate graphic identities.
+          </p>
+        </div>
+
+        {/* Category Controls */}
+        <div className="flex flex-wrap gap-2.5 mb-12 border-b border-zinc-200/50 pb-6">
+          <button
+            onClick={() => setFilter("all")}
+            className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer ${
+              filter === "all"
+                ? "bg-brand-charcoal text-white shadow-xs"
+                : "bg-white text-zinc-400 hover:text-brand-charcoal border border-zinc-100"
+            }`}
+          >
+            Show All
+          </button>
+          <button
+            onClick={() => setFilter("web")}
+            className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer ${
+              filter === "web"
+                ? "bg-brand-charcoal text-white shadow-xs"
+                : "bg-white text-zinc-400 hover:text-brand-charcoal border border-zinc-100"
+            }`}
+          >
+            <span className="flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5" />
+              Web Design & UI/UX
+            </span>
+          </button>
+          <button
+            onClick={() => setFilter("graphic")}
+            className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer ${
+              filter === "graphic"
+                ? "bg-brand-charcoal text-white shadow-xs"
+                : "bg-white text-zinc-400 hover:text-brand-charcoal border border-zinc-100"
+            }`}
+          >
+            <span className="flex items-center gap-1.5">
+              <Palette className="w-3.5 h-3.5" />
+              Graphic & Creative
+            </span>
+          </button>
+        </div>
+
+        {/* Portfolio Cards Grid */}
+        <motion.div
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredItems.map((item) => (
+              <motion.div
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.4 }}
+                key={item.id}
+                className="group relative bg-white rounded-3xl border border-zinc-100 overflow-hidden shadow-xs hover:shadow-md hover:border-zinc-200/80 transition-all duration-300"
+              >
+                {/* Responsive aspect ratio picture container */}
+                <div className="relative aspect-[3/2] overflow-hidden bg-zinc-50 border-b border-zinc-100">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  {/* Subtle dark layout overlay */}
+                  <div className="absolute inset-0 bg-brand-charcoal/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <button
+                      onClick={() => setSelectedProject(item)}
+                      className="bg-white text-brand-charcoal p-4 rounded-full shadow-lg hover:scale-110 active:scale-95 transition-all flex items-center gap-2 text-xs font-semibold uppercase tracking-wider cursor-pointer"
+                    >
+                      <Eye className="w-4 h-4 text-rose-gold" />
+                      <span>Inspect Piece</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Bottom Card Copy text */}
+                <div className="p-6 md:p-8">
+                  <div className="flex items-center justify-between gap-4 mb-2.5">
+                    <span className="font-mono text-[9px] uppercase tracking-widest text-rose-gold font-bold">
+                      {item.categoryLabel}
+                    </span>
+                    <span className="text-[10px] text-zinc-400 font-mono font-medium uppercase">
+                      {item.client}
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-serif font-bold text-brand-charcoal leading-snug mb-3">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-xs md:text-sm text-zinc-500 font-light leading-relaxed mb-6 line-clamp-2">
+                    {item.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5 mb-6">
+                    {item.tech.slice(0, 3).map((t) => (
+                      <span
+                        key={t}
+                        className="font-mono text-[9px] text-zinc-400 bg-zinc-50 border border-zinc-100/60 px-2 py-0.5 rounded"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                    {item.tech.length > 3 && (
+                      <span className="font-mono text-[9px] text-zinc-400 bg-zinc-50 px-1.5 py-0.5 rounded">
+                        +{item.tech.length - 3} More
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Trigger Detail view */}
+                  <button
+                    onClick={() => setSelectedProject(item)}
+                    className="text-xs font-bold text-brand-charcoal hover:text-rose-gold flex items-center gap-1.5 group/link cursor-pointer"
+                  >
+                    <span>View Specifications</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Canva Reference Banner */}
+        <div className="mt-16 bg-white border border-zinc-100 p-8 rounded-3xl text-center shadow-xs flex flex-col items-center max-w-3xl mx-auto relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-rose-100/10 rounded-full blur-xl pointer-events-none" />
+          <span className="font-mono text-[9px] tracking-widest text-rose-gold uppercase font-bold mb-2">
+            Looking for more pieces?
+          </span>
+          <h3 className="text-xl md:text-2xl font-serif text-brand-charcoal font-bold mb-4">
+            Explore Rio's Full Creative Showcase
+          </h3>
+          <p className="text-zinc-500 text-xs md:text-sm font-light max-w-lg mb-6 leading-relaxed">
+            Access her official premium online digital portfolio directly to inspect interactive prototypes, social videography campaigns, and corporate branding reels.
+          </p>
+          <a
+            href="https://riogwynethsoliva.my.canva.site/portfolio-2026"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 bg-brand-charcoal hover:bg-rose-gold text-white font-semibold text-xs uppercase tracking-widest px-6 py-3.5 rounded-full transition-colors group shadow-xs cursor-pointer"
+          >
+            <span>Launch Live Canva Portfolio</span>
+            <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </a>
+        </div>
+
+      </div>
+
+      {/* Project Specifications Lightbox / Modal */}
+      <AnimatePresence>
+        {selectedProject && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedProject(null)}
+              className="fixed inset-0 bg-black z-50 backdrop-blur-xs"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 max-w-2xl w-full bg-white rounded-3xl border border-zinc-100 shadow-2xl overflow-hidden z-50 flex flex-col max-h-[90vh]"
+            >
+              {/* Header Image */}
+              <div className="relative aspect-[16/9] w-full shrink-0">
+                <img
+                  src={selectedProject.image}
+                  alt={selectedProject.title}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover"
+                />
+                <button
+                  onClick={() => setSelectedProject(null)}
+                  className="absolute top-4 right-4 bg-white/90 hover:bg-white text-brand-charcoal p-2 rounded-full shadow-md transition-colors cursor-pointer"
+                  aria-label="Close details"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Scrollable details wrapper */}
+              <div className="p-6 md:p-8 overflow-y-auto space-y-6">
+                <div>
+                  <span className="font-mono text-[9px] uppercase tracking-widest text-rose-gold font-bold">
+                    {selectedProject.categoryLabel}
+                  </span>
+                  <h3 className="text-2xl font-serif font-bold text-brand-charcoal leading-snug mt-1">
+                    {selectedProject.title}
+                  </h3>
+                  <p className="text-xs text-brand-muted mt-1 font-mono uppercase">
+                    CLIENT / PARTNER: {selectedProject.client}
+                  </p>
+                </div>
+
+                <p className="text-xs md:text-sm text-zinc-500 font-light leading-relaxed">
+                  {selectedProject.description}
+                </p>
+
+                {/* Scope list */}
+                <div className="space-y-3">
+                  <p className="font-mono text-[9px] uppercase tracking-widest text-zinc-400 font-bold border-b border-zinc-100 pb-2">
+                    Scope of Action & Milestones achieved
+                  </p>
+                  <ul className="space-y-2.5 text-zinc-500 text-xs md:text-sm font-light">
+                    {selectedProject.details.map((detail, index) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <Check className="w-4 h-4 text-rose-gold shrink-0 mt-0.5" />
+                        <span>{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Tech specifications used */}
+                <div>
+                  <p className="font-mono text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-3">
+                    Technologies / Ecosystem Applied
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedProject.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="font-mono text-[10px] text-zinc-600 bg-zinc-50 border border-zinc-100 px-2.5 py-1 rounded-md"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Outer action portal link */}
+                <div className="pt-4 border-t border-zinc-100 flex items-center justify-between">
+                  <span className="font-mono text-[9px] text-zinc-400">PROJECT PORTAL 2026</span>
+                  <a
+                    href={selectedProject.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 bg-brand-charcoal hover:bg-rose-gold text-white font-semibold text-xs uppercase tracking-widest py-3 px-5 rounded-xl transition-colors cursor-pointer"
+                  >
+                    <span>Launch Project Canvas</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+}
+</file>
+
+<file path="src/components/SkillsGrid.tsx">
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState } from "react";
+import { motion } from "motion/react";
+import { Layers, Palette, Code, CheckCircle, Sparkles, Figma, Compass, Monitor, Film, Lightbulb, Type } from "lucide-react";
+
+interface SkillItemDetail {
+  name: string;
+  description: string;
+  proficiency: number; // percentage out of 100
+}
+
+interface SkillPillar {
+  id: string;
+  title: string;
+  tagline: string;
+  description: string;
+  skills: SkillItemDetail[];
+  colorTheme: {
+    badge: string;
+    bg: string;
+    border: string;
+    icon: string;
+    accent: string;
+  };
+}
+
+const pillarsData: SkillPillar[] = [
+  {
+    id: "uiux-frontend",
+    title: "UI/UX & Frontend Development",
+    tagline: "Bridging code & interactive user design.",
+    description: "Creating highly intuitive, wireframed user experiences that translate beautifully into lightweight, modern, semantic web applications.",
+    skills: [
+      { name: "Figma Prototyping", description: "Design systems, auto-layout, wireframes, and collaborative specs", proficiency: 95 },
+      { name: "React.js Framework", description: "State management, hook lifecycle optimization, modular logic", proficiency: 90 },
+      { name: "Tailwind CSS", description: "Utility-first custom design tokens, layout grids, elegant spacing", proficiency: 95 },
+      { name: "Webflow Site Architecture", description: "Structured visually-sound builds, lightweight integrations", proficiency: 85 },
+      { name: "Wireframing & Flows", description: "High-fidelity mapping, user testing, interactive mockups", proficiency: 92 },
+    ],
+    colorTheme: {
+      badge: "bg-amber-50 text-amber-800 border-amber-100",
+      bg: "bg-white",
+      border: "border-zinc-100",
+      icon: "text-amber-600 bg-amber-50/50",
+      accent: "from-[#F5E6D3] to-transparent",
+    },
+  },
+  {
+    id: "creative-design",
+    title: "Creative & Graphic Design",
+    tagline: "Expressive branding & visual storytelling.",
+    description: "Developing consistent brand identities, high-impact social media assets, and professional digital videography across industry campaigns.",
+    skills: [
+      { name: "Adobe Creative Suite", description: "Photoshop, Illustrator, InDesign vector and raster branding", proficiency: 92 },
+      { name: "Premiere Pro Videography", description: "Video reels, timing edits, audio synchronizations, color correction", proficiency: 88 },
+      { name: "Brand Design Strategy", description: "Logo redesigns, mood boards, official corporate guidelines", proficiency: 90 },
+      { name: "AI-Assisted Ideation", description: "Prompt engineering, generative assets, workflow automation", proficiency: 85 },
+    ],
+    colorTheme: {
+      badge: "bg-rose-50 text-rose-800 border-rose-100",
+      bg: "bg-white",
+      border: "border-zinc-100",
+      icon: "text-rose-500 bg-rose-50/50",
+      accent: "from-[#FADCD9] to-transparent",
+    },
+  },
+];
+
+export function SkillCard({ pillar }: { pillar: SkillPillar; key?: React.Key }) {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const getPillarIcon = (id: string) => {
+    switch (id) {
+      case "uiux-frontend":
+        return <Layers className="w-5 h-5 text-rose-gold" />;
+      case "creative-design":
+        return <Palette className="w-5 h-5 text-rose-gold" />;
+      default:
+        return <Sparkles className="w-5 h-5 text-rose-gold" />;
+    }
+  };
+
+  return (
+    <motion.div
+      id={`skill-card-${pillar.id}`}
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className={`relative bg-white rounded-3xl border ${pillar.colorTheme.border} p-6 md:p-8 shadow-xs hover:shadow-md transition-shadow overflow-hidden group`}
+    >
+      {/* Soft color blush in the corner */}
+      <div className={`absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl ${pillar.colorTheme.accent} rounded-bl-full opacity-40 group-hover:scale-110 transition-transform duration-500 pointer-events-none`} />
+
+      <div className="relative z-10">
+        {/* Card Header */}
+        <div className="flex items-center gap-3 mb-4">
+          <div className={`p-3 rounded-2xl ${pillar.colorTheme.icon} border border-zinc-100`}>
+            {getPillarIcon(pillar.id)}
+          </div>
+          <div>
+            <span className="font-mono text-[9px] uppercase tracking-widest text-zinc-400 font-bold block">
+              Professional Pillar
+            </span>
+            <h3 className="text-xl md:text-2xl font-serif font-bold text-brand-charcoal mt-0.5">
+              {pillar.title}
+            </h3>
+          </div>
+        </div>
+
+        <p className="text-sm font-medium text-rose-gold-dark font-sans tracking-wide mb-3">
+          {pillar.tagline}
+        </p>
+
+        <p className="text-zinc-500 text-xs md:text-sm leading-relaxed mb-8">
+          {pillar.description}
+        </p>
+
+        {/* Skill Bars with Details */}
+        <div className="space-y-5">
+          <p className="font-mono text-[10px] uppercase tracking-wider text-zinc-400 border-b border-zinc-100 pb-2 font-semibold">
+            Core Toolkit & Methodologies
+          </p>
+          {pillar.skills.map((skill, index) => (
+            <div
+              key={skill.name}
+              className="group/item"
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              <div className="flex justify-between items-start mb-1.5">
+                <div>
+                  <span className="text-xs font-semibold text-brand-charcoal group-hover/item:text-rose-gold transition-colors flex items-center gap-1.5">
+                    <CheckCircle className="w-3.5 h-3.5 text-rose-gold opacity-80" />
+                    {skill.name}
+                  </span>
+                  <p className="text-[11px] text-zinc-400 font-light mt-0.5 ml-5">
+                    {skill.description}
+                  </p>
+                </div>
+                <span className="font-mono text-[10px] text-zinc-400 bg-zinc-50 border border-zinc-100 px-1.5 py-0.5 rounded-md">
+                  {skill.proficiency}%
+                </span>
+              </div>
+
+              {/* Progress bar */}
+              <div className="h-1.5 w-full bg-zinc-100 rounded-full overflow-hidden ml-5">
+                <motion.div
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${skill.proficiency}%` }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
+                  className="h-full bg-gradient-to-r from-rose-gold-light to-rose-gold rounded-full"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+export default function SkillsGrid() {
+  return (
+    <section id="skills" className="py-20 md:py-28 bg-[#FAFAFA] relative border-y border-zinc-100">
+      {/* Soft warm gradients */}
+      <div className="absolute top-0 left-0 w-64 h-64 bg-rose-50/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-zinc-50/50 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+        {/* Section header */}
+        <div className="text-center max-w-2xl mx-auto mb-16 md:mb-20">
+          <span className="font-mono text-xs tracking-widest text-rose-gold uppercase font-bold">
+            Skillsets & Expertises
+          </span>
+          <h2 className="text-3xl md:text-5xl font-serif text-brand-charcoal mt-2 mb-4 font-bold tracking-tight">
+            Balanced Engineering, Intentional Design.
+          </h2>
+          <div className="w-16 h-1 bg-gradient-to-r from-rose-gold-light to-rose-gold mx-auto rounded-full mb-4" />
+          <p className="text-zinc-500 text-sm md:text-base font-light leading-relaxed">
+            Proficient in blending standard corporate requirements with unique, creative structural accents. Here is how my core pillars drive scalable digital solutions.
+          </p>
+        </div>
+
+        {/* Structural Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+          {pillarsData.map((pillar) => (
+            <SkillCard key={pillar.id} pillar={pillar} />
+          ))}
+        </div>
+
+        {/* Bottom Interactive Toolkit Badge Line */}
+        <div className="mt-16 bg-white border border-zinc-100 p-6 rounded-2xl shadow-xs text-center">
+          <p className="font-mono text-[10px] uppercase tracking-wider text-zinc-400 font-bold mb-4">
+            Additional Ecosystem & Integrations
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {["GitHub & Version Control", "Adobe Premiere Pro", "Brand & Corporate Guideline Systems", "Agile Handoff Workflows", "Wireframing / User Flows", "Semantic Responsive Coding"].map((tech) => (
+              <span
+                key={tech}
+                className="text-[11px] font-medium text-brand-charcoal bg-zinc-50 hover:bg-rose-50 hover:text-rose-gold-dark border border-zinc-100 hover:border-rose-100/55 px-3 py-1.5 rounded-lg transition-colors cursor-default"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+</file>
+
+<file path="src/index.css">
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-brand-beige: #FAF8F5;
+  --color-brand-charcoal: #18181B;
+  --color-brand-muted: #71717A;
+  
+  --color-rose-gold: #D4A373;
+  --color-rose-gold-light: #E9D8C6;
+  --color-rose-gold-dark: #A77A50;
+  
+  --color-blush-50: #FFF5F5;
+  --color-blush-100: #FFEBEB;
+  --color-blush-200: #FFD1D1;
+  --color-blush-300: #FFA8A8;
+  --color-blush-400: #FF7070;
+  --color-blush-500: #E05353;
+  
+  --animate-fade-in: fade-in 0.8s ease-out forwards;
+  --animate-slide-up: slide-up 0.8s ease-out forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  color: var(--color-brand-charcoal);
+  background-color: #FFFFFF;
+}
+
+::selection {
+  background-color: #F4EAE1;
+  color: #8C5D3A;
+}
+</file>
+
+<file path="src/main.tsx">
+import {StrictMode} from 'react';
+import {createRoot} from 'react-dom/client';
+import App from './App.tsx';
+import './index.css';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
+</file>
+
+<file path="src/types.ts">
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+export interface SkillItem {
+  name: string;
+  level: string; // e.g. "Advanced", "Intermediate"
+}
+
+export interface SkillCategory {
+  title: string;
+  description: string;
+  skills: string[];
+  color: string;
+}
+
+export interface JobExperience {
+  role: string;
+  company: string;
+  location: string;
+  period: string;
+  highlights: string[];
+  technologies: string[];
+}
+
+export interface ContactInfo {
+  email: string;
+  phone: string;
+  location: string;
+  portfolioUrl: string;
+  linkedinUrl: string;
+}
+</file>
+
+<file path="tsconfig.json">
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "module": "ESNext",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "allowJs": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
+    "allowImportingTsExtensions": true,
+    "noEmit": true
+  }
+}
+</file>
+
+<file path="vite.config.ts">
+import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+import {defineConfig} from 'vite';
+
+export default defineConfig(() => {
+  return {
+    plugins: [react(), tailwindcss()],
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, '.'),
+      },
+    },
+    server: {
+      // HMR is disabled in AI Studio via DISABLE_HMR env var.
+      // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
+      hmr: process.env.DISABLE_HMR !== 'true',
+      // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
+      watch: process.env.DISABLE_HMR === 'true' ? null : {},
+    },
+  };
+});
+</file>
+
+</files>
