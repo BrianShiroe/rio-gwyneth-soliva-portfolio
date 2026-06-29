@@ -35,12 +35,12 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "graphic-showcase-1",
-    title: "Sovereign Luxury Brand Identity",
+    title: "BH Sovereign Luxury Brand Identity",
     client: "Sovereign Group (UAE)",
     category: "graphic",
     categoryLabel: "Graphic & Creative Design",
     image: "/src/assets/images/branding_identity_showcase_1782748928214.jpg",
-    description: "Comprehensive corporate brand guidelines, including custom typography pairing, elegant vector logo systems, and premium asset libraries.",
+    description: "Comprehensive corporate brand guidelines featuring a premium 'BH' vector logo system, elegant typography pairing, and asset libraries.",
     details: [
       "Crafted custom vector lettermarks and emblem geometry inside Adobe Illustrator.",
       "Established cohesive, high-contrast color codes supporting digital and physical print formats.",
