@@ -1,56 +1,117 @@
-<div align="center">
-  <h1>✨ Rio Gwyneth Soliva — Professional Portfolio</h1>
-  <p><strong>UI/UX Designer & Frontend Developer Portfolio Platform</strong></p>
-  <p>An elegant, high-performance, component-based single-page application built using React 19, TypeScript, and Tailwind CSS v4.</p>
-</div>
+========================================================================
+✨ Rio Gwyneth Soliva — Professional Portfolio Setup Guide
+========================================================================
 
----
+An elegant, high-performance, component-based single-page portfolio 
+application built using React 19, TypeScript, and Tailwind CSS v4.
 
-## 🚀 Overview
 
-This repository hosts the official personal branding platform and corporate portfolio for **Rio Gwyneth Soliva**, showcasing over 3+ years of dual-track experience bridging pixel-perfect visual design with modern frontend development. 
+------------------------------------------------------------------------
+🚀 Overview
+------------------------------------------------------------------------
+This repository hosts the official personal branding platform and 
+corporate portfolio for Rio Gwyneth Soliva, showcasing over 3+ years 
+of dual-track experience bridging pixel-perfect visual design with 
+modern frontend development. 
 
-### Core Pillars Showcased:
-* **UI/UX Architecture:** High-fidelity interactive wireframes, component design systems, and seamless conversion from Figma mockups to semantic code layouts.
-* **Frontend Engineering:** Modular development utilizing modern hooks, fluid micro-interactions, and reactive motion design components.
-* **Creative Assets:** High-impact social media marketing creative campaigns, video explainer productions, and complete brand identity design portfolios.
+Core Tracks:
+* UI/UX Architecture: High-fidelity interactive wireframes, component 
+  design systems, and seamless conversion from Figma mockups to 
+  semantic code layouts.
+* Frontend Engineering: Modern development utilizing state hooks, fluid 
+  micro-interactions, and reactive motion design components.
+* Creative Assets: High-impact social media marketing campaigns, video 
+  explainer productions, and complete brand identity design portfolios.
 
----
 
-## 🛠️ Technical Architecture & Tech Stack
+------------------------------------------------------------------------
+🛠️ Technical Tech Stack
+------------------------------------------------------------------------
+* Framework Core: React 19 & TypeScript
+* Build Engine: Vite v6 (Supercharged Hot Module Replacement)
+* Styling Architecture: Tailwind CSS v4 
+* Motion Framework: Motion (formerly Framer Motion v12+)
+* Iconography Matrix: Lucide React
 
-The workspace relies on a utility-first, type-safe development environment configured with:
 
-* **Framework Core:** React 19 (Strict Module Compilation) & TypeScript
-* **Build Engine:** Vite v6 (Supercharged Hot Module Replacement & Bundler Optimization)
-* **Styling Architecture:** Tailwind CSS v4 (Powered by `@tailwindcss/vite` configuration compiler)
-* **Motion Framework:** Motion (formerly Framer Motion v12+) for state-driven UI animations
-* **Iconography Matrix:** Lucide React
-* **Server Layer:** Express engine with Dotenv configurations for environment routing or secure deployments
+------------------------------------------------------------------------
+🔧 Step-by-Step Installation & Local Setup
+------------------------------------------------------------------------
+Follow these steps to get the development environment running locally 
+on your machine.
 
----
+Prerequisites:
+Ensure that you have Node.js (v18.x or above recommended) and npm 
+installed. You can check your versions by running:
+  node -v
+  npm -v
 
-## 📋 Directory Structure Overview
+1. Clone the Repository:
+   Clone this repository to your local machine using terminal or 
+   command prompt, then navigate into the project directory:
+     git clone <your-repository-url>
+     cd portfolio-website
 
-```text
-├── .env.example              # Template for server-side security rules
-├── index.html                # Main SPA viewport anchor
-├── metadata.json             # Core app definition configurations
-├── package.json              # Script automation and dependency tree
-├── tsconfig.json             # TypeScript compiler settings
-├── vite.config.ts            # Vite & Tailwind compilation plugin chains
-└── src/
-    ├── App.tsx               # Root view wrapper & layout organizer
-    ├── index.css             # Base layer styles & Tailwind injections
-    ├── main.tsx              # Application client-side DOM entry hook
-    ├── types.ts              # Data models & shared TypeScript type contracts
-    ├── assets/images/        # High-resolution showcase media assets
-    └── components/           # Atomic bento layouts & functional sections
-        ├── Layout.tsx        # Shell wrapping with responsive header
-        ├── Navbar.tsx        # Floating dynamic desktop navigation & mobile drawers
-        ├── Hero.tsx          # Credentials spotlight & direct CTA controls
-        ├── SkillsGrid.tsx    # Technical capabilities matrix
-        ├── PortfolioGrid.tsx # High-impact web & graphic showcase grids
-        ├── ExperienceTimeline.tsx # Chronological career tracker & education nodes
-        ├── ContactSection.tsx # Secure client lead collection form & copy widgets
-        └── Footer.tsx        # Digital footprint links & contact links
+2. Install Project Dependencies:
+   Run the installation script to safely assemble all production 
+   assets and compiler dev-dependencies:
+     npm install
+
+3. Setup Environment Variables:
+   The repository is wired to adapt seamlessly between local machines 
+   and cloud runtimes. Create a local environment variables file by 
+   copying the template:
+     cp .env.example .env.local
+
+   Open the newly created .env.local file in your code editor and 
+   substitute the runtime variables (if applicable):
+     GEMINI_API_KEY="YOUR_ACTUAL_API_KEY_HERE"
+     APP_URL="http://localhost:3000"
+
+4. Boot Up the Development Server:
+   Run the local development web server instantly:
+     npm run dev
+
+   Once the compilation finishes, open your browser and navigate to the 
+   local link provided in your terminal, typically:
+   👉 http://localhost:3000
+
+
+------------------------------------------------------------------------
+⚙️ Available Script Commands
+------------------------------------------------------------------------
+All workflows are pre-packaged into simple npm script shortcuts 
+defined inside package.json:
+
+* npm run dev      : Boots up the local development server on port 3000.
+* npm run build    : Compiles a production-ready optimized build output 
+                     inside the /dist bundle directory.
+* npm run preview  : Spins up a local static server previewing the final 
+                     compiled production code bundle.
+* npm run lint     : Triggers a rigid TypeScript diagnostic test 
+                     compilation loop to verify zero type regressions.
+* npm run clean    : Instantly deletes local build artifacts (dist) 
+                     to guarantee clean, deterministic builds.
+
+
+------------------------------------------------------------------------
+🌐 Production Deployment Guide
+------------------------------------------------------------------------
+When you are ready to launch the website live on production hosting 
+services (such as Vercel, Netlify, or Cloudflare Pages):
+
+1. Build the Application:
+   Run the build script to compile and minimize the code:
+     npm run build
+
+2. Deploying Assets:
+   The output files will be structured neatly inside the generated 
+   /dist folder. 
+   * For Vercel / Netlify: You can link the GitHub repository directly 
+     to their dashboard. They will auto-detect the Vite configuration, 
+     run 'npm run build' automatically, and set the publish directory 
+     to 'dist'.
+   * For Static Servers: Drag and drop or upload the entire contents of 
+     the /dist folder directly onto your static hosting root file 
+     directory.
+========================================================================
