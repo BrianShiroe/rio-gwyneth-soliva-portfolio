@@ -5,12 +5,27 @@
 
 import React, { useState } from "react";
 import { motion } from "motion/react";
-import { Layers, Palette, Code, CheckCircle, Sparkles, Figma, Compass, Monitor, Film, Lightbulb, Type } from "lucide-react";
+import { 
+  Layers, 
+  Palette, 
+  CheckCircle, 
+  Sparkles, 
+  Figma, 
+  Code, 
+  Paintbrush, 
+  Layout, 
+  GitBranch, 
+  Video, 
+  Cpu, 
+  Laptop, 
+  Eye 
+} from "lucide-react";
 
 interface SkillItemDetail {
   name: string;
   description: string;
   proficiency: number; // percentage out of 100
+  icon?: React.ComponentType<{ className?: string }>; // Dynamic lucide icon wrapper
 }
 
 interface SkillPillar {
@@ -35,11 +50,11 @@ const pillarsData: SkillPillar[] = [
     tagline: "Bridging code & interactive user design.",
     description: "Creating highly intuitive, wireframed user experiences that translate beautifully into lightweight, modern, semantic web applications.",
     skills: [
-      { name: "Figma Prototyping", description: "Design systems, auto-layout, wireframes, and collaborative specs", proficiency: 95 },
-      { name: "React.js Framework", description: "State management, hook lifecycle optimization, modular logic", proficiency: 90 },
-      { name: "Tailwind CSS", description: "Utility-first custom design tokens, layout grids, elegant spacing", proficiency: 95 },
-      { name: "Webflow Site Architecture", description: "Structured visually-sound builds, lightweight integrations", proficiency: 85 },
-      { name: "Wireframing & Flows", description: "High-fidelity mapping, user testing, interactive mockups", proficiency: 92 },
+      { name: "Figma Prototyping", description: "Design systems, auto-layout, wireframes, and collaborative specs", proficiency: 95, icon: Figma },
+      { name: "React.js Framework", description: "State management, hook lifecycle optimization, modular logic", proficiency: 90, icon: Code },
+      { name: "Tailwind CSS", description: "Utility-first custom design tokens, layout grids, elegant spacing", proficiency: 95, icon: Paintbrush },
+      { name: "Webflow Site Architecture", description: "Structured visually-sound builds, lightweight integrations", proficiency: 85, icon: Laptop },
+      { name: "Wireframing & Flows", description: "High-fidelity mapping, user testing, interactive mockups", proficiency: 92, icon: Layout },
     ],
     colorTheme: {
       badge: "bg-amber-50 text-amber-800 border-amber-100",
@@ -55,10 +70,10 @@ const pillarsData: SkillPillar[] = [
     tagline: "Expressive branding & visual storytelling.",
     description: "Developing consistent brand identities, high-impact social media assets, and professional digital videography across industry campaigns.",
     skills: [
-      { name: "Adobe Creative Suite", description: "Photoshop, Illustrator, InDesign vector and raster branding", proficiency: 92 },
-      { name: "Premiere Pro Videography", description: "Video reels, timing edits, audio synchronizations, color correction", proficiency: 88 },
-      { name: "Brand Design Strategy", description: "Logo redesigns, mood boards, official corporate guidelines", proficiency: 90 },
-      { name: "AI-Assisted Ideation", description: "Prompt engineering, generative assets, workflow automation", proficiency: 85 },
+      { name: "Adobe Creative Suite", description: "Photoshop, Illustrator, InDesign vector and raster branding", proficiency: 92, icon: Palette },
+      { name: "Premiere Pro Videography", description: "Video reels, timing edits, audio synchronizations, color correction", proficiency: 88, icon: Video },
+      { name: "Brand Design Strategy", description: "Logo redesigns, mood boards, official corporate guidelines", proficiency: 90, icon: Eye },
+      { name: "AI-Assisted Ideation", description: "Prompt engineering, generative assets, workflow automation", proficiency: 85, icon: Cpu },
     ],
     colorTheme: {
       badge: "bg-rose-50 text-rose-800 border-rose-100",
@@ -123,40 +138,45 @@ export function SkillCard({ pillar }: { pillar: SkillPillar; key?: React.Key }) 
           <p className="font-mono text-[10px] uppercase tracking-wider text-zinc-400 border-b border-zinc-100 pb-2 font-semibold">
             Core Toolkit & Methodologies
           </p>
-          {pillar.skills.map((skill, index) => (
-            <div
-              key={skill.name}
-              className="group/item"
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <div className="flex justify-between items-start mb-1.5">
-                <div>
-                  <span className="text-xs font-semibold text-brand-charcoal group-hover/item:text-rose-gold transition-colors flex items-center gap-1.5">
-                    <CheckCircle className="w-3.5 h-3.5 text-rose-gold opacity-80" />
-                    {skill.name}
-                  </span>
-                  <p className="text-[11px] text-zinc-400 font-light mt-0.5 ml-5">
-                    {skill.description}
-                  </p>
-                </div>
-                <span className="font-mono text-[10px] text-zinc-400 bg-zinc-50 border border-zinc-100 px-1.5 py-0.5 rounded-md">
-                  {skill.proficiency}%
-                </span>
-              </div>
+          {pillar.skills.map((skill, index) => {
+            // Determine if a specific icon exists, fallback to CheckCircle
+            const SkillIcon = skill.icon || CheckCircle;
 
-              {/* Progress bar */}
-              <div className="h-1.5 w-full bg-zinc-100 rounded-full overflow-hidden ml-5">
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.proficiency}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.2, ease: "easeOut" }}
-                  className="h-full bg-gradient-to-r from-rose-gold-light to-rose-gold rounded-full"
-                />
+            return (
+              <div
+                key={skill.name}
+                className="group/item"
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+              >
+                <div className="flex justify-between items-start mb-1.5">
+                  <div>
+                    <span className="text-xs font-semibold text-brand-charcoal group-hover/item:text-rose-gold transition-colors flex items-center gap-2">
+                      <SkillIcon className="w-3.5 h-3.5 text-rose-gold opacity-80 group-hover/item:scale-110 transition-transform" />
+                      {skill.name}
+                    </span>
+                    <p className="text-[11px] text-zinc-400 font-light mt-0.5 ml-5:// layout align fixes">
+                      {skill.description}
+                    </p>
+                  </div>
+                  <span className="font-mono text-[10px] text-zinc-400 bg-zinc-50 border border-zinc-100 px-1.5 py-0.5 rounded-md">
+                    {skill.proficiency}%
+                  </span>
+                </div>
+
+                {/* Progress bar */}
+                <div className="h-1.5 w-full bg-zinc-100 rounded-full overflow-hidden ml-5">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${skill.proficiency}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, ease: "easeOut" }}
+                    className="h-full bg-gradient-to-r from-rose-gold-light to-rose-gold rounded-full"
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </motion.div>
@@ -164,6 +184,18 @@ export function SkillCard({ pillar }: { pillar: SkillPillar; key?: React.Key }) 
 }
 
 export default function SkillsGrid() {
+  // Map icons for bottom ecosystem line item context
+  const getBottomBadgeIcon = (tech: string) => {
+    switch (tech) {
+      case "GitHub & Version Control":
+        return <GitBranch className="w-3 h-3 text-zinc-400" />;
+      case "Adobe Premiere Pro":
+        return <Video className="w-3 h-3 text-zinc-400" />;
+      default:
+        return <CheckCircle className="w-3 h-3 text-zinc-400" />;
+    }
+  };
+
   return (
     <section id="skills" className="py-20 md:py-28 bg-[#FAFAFA] relative border-y border-zinc-100">
       {/* Soft warm gradients */}
@@ -198,11 +230,19 @@ export default function SkillsGrid() {
             Additional Ecosystem & Integrations
           </p>
           <div className="flex flex-wrap justify-center gap-2">
-            {["GitHub & Version Control", "Adobe Premiere Pro", "Brand & Corporate Guideline Systems", "Agile Handoff Workflows", "Wireframing / User Flows", "Semantic Responsive Coding"].map((tech) => (
+            {[
+              "GitHub & Version Control", 
+              "Adobe Premiere Pro", 
+              "Brand & Corporate Guideline Systems", 
+              "Agile Handoff Workflows", 
+              "Wireframing / User Flows", 
+              "Semantic Responsive Coding"
+            ].map((tech) => (
               <span
                 key={tech}
-                className="text-[11px] font-medium text-brand-charcoal bg-zinc-50 hover:bg-rose-50 hover:text-rose-gold-dark border border-zinc-100 hover:border-rose-100/55 px-3 py-1.5 rounded-lg transition-colors cursor-default"
+                className="text-[11px] font-medium text-brand-charcoal bg-zinc-50 hover:bg-rose-50 hover:text-rose-gold-dark border border-zinc-100 hover:border-rose-100/55 px-3 py-1.5 rounded-lg transition-colors cursor-default flex items-center gap-1.5"
               >
+                {getBottomBadgeIcon(tech)}
                 {tech}
               </span>
             ))}
