@@ -23,7 +23,7 @@ export const portfolioData: PortfolioItem[] = [
     client: "Elysian Designs (Dubai)",
     category: "web",
     categoryLabel: "Web Design & UI/UX",
-    image: "/src/assets/images/web_design_showcase_1782748914437.jpg",
+    image: "/assets/images/web_design_showcase_1782748914437.jpg",
     description: "A minimalist, responsive landing page mockup crafted to represent high-end interior and architectural works in Business Bay, Dubai.",
     details: [
       "Designed wireframes and interactive prototypes in Figma with strict visual hierarchy.",
@@ -39,7 +39,7 @@ export const portfolioData: PortfolioItem[] = [
     client: "Sovereign Group (UAE)",
     category: "graphic",
     categoryLabel: "Graphic & Creative Design",
-    image: "/src/assets/images/branding_identity_showcase_1782748928214.jpg",
+    image: "/assets/images/branding_identity_showcase_1782748928214.jpg",
     description: "Comprehensive corporate brand guidelines featuring a premium 'BH' vector logo system, elegant typography pairing, and asset libraries.",
     details: [
       "Crafted custom vector lettermarks and emblem geometry inside Adobe Illustrator.",
@@ -55,7 +55,7 @@ export const portfolioData: PortfolioItem[] = [
     client: "L'Aura Cosmetics",
     category: "graphic",
     categoryLabel: "Graphic & Creative Design",
-    image: "/src/assets/images/social_campaign_creative_1782748942694.jpg",
+    image: "/assets/images/social_campaign_creative_1782748942694.jpg",
     description: "High-impact social campaign marketing visuals and promotional videography reels showcasing new organic cosmetic items with rose-gold styling.",
     details: [
       "Directed, shot, and edited social media reels with Premiere Pro transitions and syncing.",
@@ -71,7 +71,7 @@ export const portfolioData: PortfolioItem[] = [
     client: "RushMedia Solutions Project",
     category: "web",
     categoryLabel: "Web Design & UI/UX",
-    image: "/src/assets/images/web_design_showcase_1782748914437.jpg",
+    image: "/assets/images/web_design_showcase_1782748914437.jpg",
     description: "A boilerplate UX flow restructuring that simplifies checkouts into a highly structured 3-step conversational layout.",
     details: [
       "Mapped user pain-points and designed clean interaction modals to prevent cart abandonment.",
